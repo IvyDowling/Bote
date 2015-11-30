@@ -4,5 +4,5 @@ public interface Drawable {
 
     public Render[] getRender();
 
-    public void transform(int x, int y, AsciiCharacterData d);
+    public Render[] transform(int x, int y, AsciiCharacterData d);
 }

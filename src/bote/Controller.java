@@ -5,11 +5,21 @@ import asciiPanel.TileTransformer;
 
 public class Controller {
 
-    private static Controller controller = new Controller();
+    private static final Controller controller = new Controller();
     private static Screen screen;
+    private static TextArea console;
+    private Page page;
 
     public Controller() {
         screen = Screen.getInstance();
+        console = TextArea.getInstance();
+        setPage(new IntroPage());
+    }
+
+    public void setPage(Page p) {
+        screen.setBackgroundColor(p.getBackgroundColor());
+        screen.setForegroundColor(p.getForegroundColor());
+        this.addDraw(p.getDefaultDraw());
     }
 
     public void render() {
@@ -43,6 +53,7 @@ public class Controller {
     }
 
     public void takeInput(int keyCode) {
+        console.write(keyCode + " pressed");
         switch (keyCode) {
             case 65://a
             case 37://left

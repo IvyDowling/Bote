@@ -848,23 +848,24 @@ public class AsciiPanel extends JPanel {
     //
     public AsciiPanel write(Render r) {
 
-        if (r.x < 0 || r.x >= widthInCharacters) {
-            throw new IllegalArgumentException("x " + r.x + " must be within range [0," + widthInCharacters + ").");
+        if (r.getX() < 0 || r.getX() >= widthInCharacters) {
+            throw new IllegalArgumentException("x " + r.getX() + " must be within range [0," + widthInCharacters + ").");
         }
 
-        if (r.y < 0 || r.y >= heightInCharacters) {
-            throw new IllegalArgumentException("y " + r.y + " must be within range [0," + heightInCharacters + ").");
+        if (r.getY() < 0 || r.getY() >= heightInCharacters) {
+            throw new IllegalArgumentException("y " + r.getY() + " must be within range [0," + heightInCharacters + ").");
         }
 
-        if (r.foreground == null) {
-            r.foreground = defaultForegroundColor;
+        AsciiCharacterData d = r.getAsciiCharacterData();
+        if (d.foregroundColor == null) {
+            d.foregroundColor = defaultForegroundColor;
         }
 
-        if (r.background == null) {
-            r.background = defaultBackgroundColor;
+        if (d.backgroundColor == null) {
+            d.backgroundColor = defaultBackgroundColor;
         }
 
-        write(r.data, r.x, r.y, r.foreground, r.background);
+        write(d.character, r.getX(), r.getY(), d.foregroundColor, d.backgroundColor);
         return this;
     }
 
@@ -967,8 +968,6 @@ public class AsciiPanel extends JPanel {
     }
 
     public void withEachTile(int left, int top, int width, int height, TileTransformer transformer) {
-        AsciiCharacterData data = new AsciiCharacterData();
-
         for (int x0 = 0; x0 < width; x0++) {
             for (int y0 = 0; y0 < height; y0++) {
                 int x = left + x0;
@@ -978,9 +977,7 @@ public class AsciiPanel extends JPanel {
                     continue;
                 }
 
-                data.character = chars[x][y];
-                data.foregroundColor = foregroundColors[x][y];
-                data.backgroundColor = backgroundColors[x][y];
+                AsciiCharacterData data = new AsciiCharacterData(chars[x][y], foregroundColors[x][y], backgroundColors[x][y]);
 
                 transformer.transformTile(x, y, data);
 

@@ -1,4 +1,4 @@
-package cathedral;
+package bote;
 
 import java.awt.Color;
 import java.awt.Dimension;

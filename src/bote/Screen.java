@@ -3,7 +3,6 @@ package bote;
 import asciiPanel.*;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JPanel;
@@ -69,10 +68,6 @@ public class Screen extends JPanel {
         this.repaint();
     }
 
-    public Point getMousePosition() {
-        return asciiPanel.getMousePosition();
-    }
-
     public void clearRenders() {
         drawList.clear();
         asciiPanel.clear();
@@ -83,6 +78,28 @@ public class Screen extends JPanel {
             Screen screen = new Screen();
         }
         return screen;
+    }
+
+    public void setForegroundColor(Color fg) {
+        asciiPanel.setDefaultForegroundColor(fg);
+        asciiPanel.clear();
+        asciiPanel.withEachTile(new TileTransformer(){
+            @Override
+            public void transformTile(int x, int y, AsciiCharacterData data) {
+                data.foregroundColor = asciiPanel.getDefaultForegroundColor();
+            }
+        });
+    }
+
+    public void setBackgroundColor(Color bg) {
+        asciiPanel.setDefaultBackgroundColor(bg);
+        asciiPanel.clear();
+        asciiPanel.withEachTile(new TileTransformer(){
+            @Override
+            public void transformTile(int x, int y, AsciiCharacterData data) {
+                data.backgroundColor = asciiPanel.getDefaultBackgroundColor();
+            }
+        });
     }
 
     public int getAsciiPanelWidth() {
