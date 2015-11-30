@@ -10,7 +10,7 @@ public class Bote extends Canvas implements Runnable {
 
     private boolean running;
     private static final int HEIGHT = 19, WIDTH = 34, SCALE = 32;
-    private static final String NAME = "Cathedral";
+    private static final String NAME = "Bote";
 
     public int tickCount = 0;
 
@@ -20,14 +20,14 @@ public class Bote extends Canvas implements Runnable {
 
     private final Dimension DIMENSION = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
 
-    private cathedral.Controller control = cathedral.Controller.getInstance();
+    private Controller control = Controller.getInstance();
 
-    public Cathedral() {
+    public Bote() {
 
         frame = new JFrame(NAME);
         screen = Screen.getInstance();
         console = TextArea.getInstance();
-        frame.addKeyListener(new cathedral.Listener());
+        frame.addKeyListener(new Listener());
         frame.setFocusable(true);
 
         //sets personal bug
@@ -46,7 +46,6 @@ public class Bote extends Canvas implements Runnable {
     }
 
     public void init() {
-        control.setPage(new OpeningPage());
     }
 
     public synchronized void start() {
@@ -59,7 +58,7 @@ public class Bote extends Canvas implements Runnable {
     }
 
     public static void main(String[] args) {
-        new Cathedral().start();
+        new Bote().start();
     }
 
     public void run() {
@@ -104,10 +103,7 @@ public class Bote extends Canvas implements Runnable {
             if (System.currentTimeMillis() - lastTimer >= 1000) {
                 lastTimer += 1000;
                 //EVERY SIXTY TICKS
-                control.updateDynamicPageContent();
-                if (control.fireNextAction()) {
-                }
-                //
+                render();
                 frames = 0;
                 ticks = 0;
             }
@@ -116,13 +112,14 @@ public class Bote extends Canvas implements Runnable {
 
     }
 
+    public void render(){
+        //every 60 ticks
+    }
+    
     public void tick() {
         //Operated Every tick
 
         //tick count
         tickCount++;
     }
-}
-
-    
 }

@@ -37,7 +37,7 @@ public class Viewer {
         if (isPlaying) {
             return vid.get(index);
         }
-        return VideoLib.getEmptyRender();
+        return new Render[]{};
     }
 
     public Viewer addRenderArray(Render[] r) {
