@@ -3,10 +3,10 @@ package asciiPanel;
 import java.awt.Color;
 import java.awt.Point;
 
-public class Render {
+public class Render implements Drawable {
 
-    private final int x, y;
-    private final AsciiCharacterData charData;
+    public int x, y;
+    public AsciiCharacterData charData;
 
     public Render(char c, int x, int y, Color fg, Color bg) {
         this(x, y, new AsciiCharacterData(c, fg, bg));
@@ -32,5 +32,29 @@ public class Render {
 
     public AsciiCharacterData getAsciiCharacterData() {
         return charData;
+    }
+
+    @Override
+    public Render[] getRender() {
+        return new Render[]{this};
+    }
+
+    @Override
+    public Render[] transform(int x, int y, AsciiCharacterData d) {
+        this.x = this.x + x;
+        this.y = this.y + y;
+        if (d != null) {
+            if (d.backgroundColor != null) {
+                this.charData.backgroundColor = d.backgroundColor;
+            }
+            if (d.foregroundColor != null) {
+                this.charData.foregroundColor = d.foregroundColor;
+            }
+            if (d.character != ' ') {
+                this.charData.character = d.character;
+            }
+        }
+
+        return getRender();
     }
 }
