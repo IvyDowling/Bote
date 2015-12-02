@@ -62,14 +62,6 @@ public class ImageLib {
         "" + T_L_CORNER + H_BAR + H_BAR + H_BAR + H_BAR + H_BAR + H_BAR + H_BAR + H_BAR + H_BAR + H_BAR + H_BAR + H_BAR + H_BAR + H_BAR + B_R_CORNER + "   " + V_BAR,
         "" + B_L_CORNER + T_R_CORNER + "                 " + V_BAR
     };
-    /*
-     |
-     |
-     |
-     |
-    
-    
-     */
 
     public static final Render[] getBoteLogo(int x, int y, Color fg, Color bg) {
         return makeRenderArray(x, y, fg, bg, boteAscii);
@@ -81,6 +73,19 @@ public class ImageLib {
         for (int i = 0; i < 26; i++) {
             temp.add(new Render(x + i - 2, y + boat.length, new AsciiCharacterData('~', Color.BLUE, new Color(0, 100, 255))));
         }
+        temp.add(new Render(x + 10, y, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
+        temp.add(new Render(x + 10, y + 1, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
+        temp.add(new Render(x + 11, y + 1, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
+        temp.add(new Render(x + 10, y + 2, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
+        temp.add(new Render(x + 11, y + 2, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
+        temp.add(new Render(x + 12, y + 2, new AsciiCharacterData(MID_SHADE, Color.GRAY, Color.WHITE)));
+        temp.add(new Render(x + 10, y + 3, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
+        temp.add(new Render(x + 11, y + 3, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
+        temp.add(new Render(x + 12, y + 3, new AsciiCharacterData(MID_SHADE, Color.GRAY, Color.WHITE)));
+        temp.add(new Render(x + 10, y + 4, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
+        temp.add(new Render(x + 11, y + 4, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
+        temp.add(new Render(x + 12, y + 4, new AsciiCharacterData(MID_SHADE, Color.GRAY, Color.WHITE)));
+
         return temp.toArray(new Render[temp.size()]);
     }
 

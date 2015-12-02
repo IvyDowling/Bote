@@ -3,7 +3,7 @@ package bote;
 import asciiPanel.*;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 
@@ -23,8 +23,8 @@ public class Screen extends JPanel {
         this.add(asciiPanel = new AsciiPanel(WIDTH, HEIGHT));
         this.setBackground(Color.BLACK);
 
-        drawList = new LinkedList<>();
-        transformList = new LinkedList<>();
+        drawList = new ArrayList<>();
+        transformList = new ArrayList<>();
         asciiPanel.setBackground(Color.BLACK);
         asciiPanel.setForeground(Color.WHITE);
     }
@@ -70,6 +70,10 @@ public class Screen extends JPanel {
 
     public void clearRenders() {
         drawList.clear();
+        asciiPanel.clear();
+    }
+    
+    public void clearScreen(){
         asciiPanel.clear();
     }
 
