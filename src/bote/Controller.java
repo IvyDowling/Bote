@@ -3,6 +3,12 @@ package bote;
 import asciiPanel.Drawable;
 import asciiPanel.TileTransformer;
 import bote.game.Player;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class Controller {
 
@@ -26,8 +32,8 @@ public class Controller {
         screen.setForegroundColor(page.getForegroundColor());
         this.addDraw(page.getDefaultDraw());
     }
-    
-    public void console(String out){
+
+    public void console(String out) {
         console.write(out);
     }
 
@@ -79,17 +85,45 @@ public class Controller {
 //                break;
 //        }
     }
+    
+    public Player getPlayer(){
+        return player;
+    }
 
     public void newPlayer(Player p) {
         player = p;
+        this.save();
     }
 
-    public boolean loadGame() {
-        return true;
+    public Player loadGame() {
+        Player load = null;
+        try {
+            FileInputStream fIn = new FileInputStream("sv.data");
+            ObjectInputStream objIn = new ObjectInputStream(fIn);
+            load = (Player) objIn.readObject();
+        } catch (Exception e) {
+            System.out.println("I didn't load it");
+        }
+        System.out.println(load.toString());
+        return load;
     }
 
     public void save() {
-
+        try {
+            File f = new File("sv.data");
+            f.delete();
+        } catch (Exception io) {
+            System.out.println("couldn't delete the file");
+        }
+        try {
+            FileOutputStream fOut = new FileOutputStream("sv.data");
+            ObjectOutputStream objOut = new ObjectOutputStream(fOut);
+            objOut.writeObject(player);
+            fOut.close();
+            objOut.close();
+        } catch (Exception e) {
+            System.out.println("I didn't save it");
+        }
     }
 
     public int getScreenWidth() {

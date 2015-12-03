@@ -41,7 +41,8 @@ public class IntroPage extends Page {
                     @Override
                     public void exe(Controller c) {
                         //load game data
-                        
+                        c.newPlayer(c.loadGame());
+                        c.setPage(new MainPage());
                     }
                 };
             case 78://n
@@ -62,7 +63,6 @@ public class IntroPage extends Page {
 
     @Override
     public void playViewer() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private static Render[] makeRenderArray(int x, int y, Color fg, Color bg, String[] img) {

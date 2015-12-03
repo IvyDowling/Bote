@@ -51,7 +51,15 @@ public class NewPlayerPage extends Page {
             return new Command() {
                 @Override
                 public void exe(Controller c) {
-                    c.newPlayer(new Player(name));
+                    String plName = "";
+                    for (int i = 0; i < name.length; i++) {
+                        if (name[i] < 256) {
+                            plName = plName + name[i] + "";
+                        }
+                    }
+                    // trim gets rid of messy null char spaces
+                    plName = plName.trim();
+                    c.newPlayer(new Player(plName));
                     c.setPage(new MainPage());
                 }
             };
@@ -78,6 +86,7 @@ public class NewPlayerPage extends Page {
     }
 
     @Override
+
     public void playViewer() {
     }
 

@@ -27,6 +27,9 @@ public class ImageLib {
     public static final char DARK_SHADE = '\u00B2';
     public static final char SUN = '\u000F';
     public static final char CIRCLE = '\u0009';
+    public static final char CENT = '\u009B';
+    public static final char ALPHA = '\u00E0';
+
 
     //Strings
     private static final String[] boteAscii = {
