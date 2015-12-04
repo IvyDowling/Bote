@@ -6,7 +6,6 @@ import bote.game.Player;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -25,9 +24,8 @@ public class Controller {
     }
 
     public final void setPage(Page p) {
+        this.clearDraws();
         page = p;
-        screen.clearScreen();
-        screen.clearRenders();
         screen.setBackgroundColor(page.getBackgroundColor());
         screen.setForegroundColor(page.getForegroundColor());
         this.addDraw(page.getDefaultDraw());
@@ -63,8 +61,8 @@ public class Controller {
         }
     }
 
-    public void clearRenders() {
-        screen.clearRenders();
+    public void clearDraws() {
+        screen.clearDraws();
     }
 
     public void takeInput(int keyCode) {
@@ -85,8 +83,8 @@ public class Controller {
 //                break;
 //        }
     }
-    
-    public Player getPlayer(){
+
+    public Player getPlayer() {
         return player;
     }
 

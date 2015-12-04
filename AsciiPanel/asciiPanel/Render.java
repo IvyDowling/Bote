@@ -35,12 +35,12 @@ public class Render implements Drawable {
     }
 
     @Override
-    public Render[] getRender() {
-        return new Render[]{this};
+    public Render getRender() {
+        return this;
     }
 
     @Override
-    public Render[] transform(int x, int y, AsciiCharacterData d) {
+    public Render transform(int x, int y, AsciiCharacterData d) {
         this.x = this.x + x;
         this.y = this.y + y;
         if (d != null) {

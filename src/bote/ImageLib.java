@@ -22,6 +22,9 @@ public class ImageLib {
     public static final char T_L_DOUBLE_CORNER = '\u00C9';
     public static final char B_R_DOUBLE_CORNER = '\u00BC';
     public static final char T_R_DOUBLE_CORNER = '\u00BB';
+    public static final char CROSS = '\u00C5';
+    public static final char DOUBLE_CROSS = '\u00CE';
+    //non block symbols
     public static final char LIGHT_SHADE = '\u00B0';
     public static final char MID_SHADE = '\u00B1';
     public static final char DARK_SHADE = '\u00B2';
@@ -29,7 +32,15 @@ public class ImageLib {
     public static final char CIRCLE = '\u0009';
     public static final char CENT = '\u009B';
     public static final char ALPHA = '\u00E0';
-
+    public static final char BETA = '\u00E1';
+    public static final char CAP_SIGMA = '\u00E4';
+    public static final char SIGMA = '\u00E5';
+    public static final char PHI = '\u00E8';
+    public static final char DOUBLE_S = '\u0015';
+    public static final char HOUSE = '\u007F';
+    public static final char DOT = '\u00F9';
+    public static final char HOLLOW_DOT = '\u00F8';
+    public static final char TRIPLE_BAR = '\u00F0';
 
     //Strings
     private static final String[] boteAscii = {

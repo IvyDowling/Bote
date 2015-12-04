@@ -14,8 +14,8 @@ public class Screen extends JPanel {
     private static final int STARTING_HEIGHT = 75, STARTING_WIDTH = 80;
     private static Screen screen = new Screen();
     private static AsciiPanel asciiPanel;
-    private List<Drawable> drawList;
     private List<TileTransformer> transformList;
+    private Drawable[][] draws;
 
     public Screen() {
         this.setSize(DIMENSION);
@@ -23,7 +23,7 @@ public class Screen extends JPanel {
         this.add(asciiPanel = new AsciiPanel(WIDTH, HEIGHT));
         this.setBackground(Color.BLACK);
 
-        drawList = new ArrayList<>();
+        draws = new Drawable[WIDTH][HEIGHT];
         transformList = new ArrayList<>();
         asciiPanel.setBackground(Color.BLACK);
         asciiPanel.setForeground(Color.WHITE);
@@ -40,7 +40,7 @@ public class Screen extends JPanel {
     }
 
     public void addDraw(Drawable d) {
-        drawList.add(d);
+        draws[d.getX()][d.getY()] = d;
     }
 
     public void addDraw(Drawable[] d) {
@@ -50,11 +50,10 @@ public class Screen extends JPanel {
     }
 
     public void render() {
-        if (!drawList.isEmpty()) {
-            Drawable[] tempDraw = drawList.toArray(new Drawable[drawList.size()]);
-            for (Drawable draw : tempDraw) {
-                for (Render r : draw.getRender()) {
-                    asciiPanel.write(r);
+        for (Drawable[] row : draws) {
+            for (Drawable draw : row) {
+                if (draw != null) {
+                    asciiPanel.write(draw.getRender());
                 }
             }
         }
@@ -68,13 +67,13 @@ public class Screen extends JPanel {
         this.repaint();
     }
 
-    public void clearRenders() {
-        drawList.clear();
-        asciiPanel.clear();
+    public void clearDraws() {
+        draws = new Drawable[WIDTH][HEIGHT];
+        this.clearScreen();
     }
-    
-    public void clearScreen(){
-        asciiPanel.clear();
+
+    public void clearScreen() {
+        asciiPanel.clear(' ');
     }
 
     public static Screen getInstance() {
@@ -87,7 +86,7 @@ public class Screen extends JPanel {
     public void setForegroundColor(Color fg) {
         asciiPanel.setDefaultForegroundColor(fg);
         asciiPanel.clear();
-        asciiPanel.withEachTile(new TileTransformer(){
+        asciiPanel.withEachTile(new TileTransformer() {
             @Override
             public void transformTile(int x, int y, AsciiCharacterData data) {
                 data.foregroundColor = asciiPanel.getDefaultForegroundColor();
@@ -98,7 +97,7 @@ public class Screen extends JPanel {
     public void setBackgroundColor(Color bg) {
         asciiPanel.setDefaultBackgroundColor(bg);
         asciiPanel.clear();
-        asciiPanel.withEachTile(new TileTransformer(){
+        asciiPanel.withEachTile(new TileTransformer() {
             @Override
             public void transformTile(int x, int y, AsciiCharacterData data) {
                 data.backgroundColor = asciiPanel.getDefaultBackgroundColor();
