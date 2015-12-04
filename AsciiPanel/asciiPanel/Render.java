@@ -30,17 +30,13 @@ public class Render implements Drawable {
         return y;
     }
 
-    public AsciiCharacterData getAsciiCharacterData() {
+    @Override
+    public AsciiCharacterData getData() {
         return charData;
     }
 
     @Override
-    public Render getRender() {
-        return this;
-    }
-
-    @Override
-    public Render transform(int x, int y, AsciiCharacterData d) {
+    public void transform(int x, int y, AsciiCharacterData d) {
         this.x = this.x + x;
         this.y = this.y + y;
         if (d != null) {
@@ -54,7 +50,5 @@ public class Render implements Drawable {
                 this.charData.character = d.character;
             }
         }
-
-        return getRender();
     }
 }

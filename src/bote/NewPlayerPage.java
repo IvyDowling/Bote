@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class NewPlayerPage extends Page {
 
@@ -59,8 +60,15 @@ public class NewPlayerPage extends Page {
                     }
                     // trim gets rid of messy null char spaces
                     plName = plName.trim();
-                    c.newPlayer(new Player(plName));
-                    c.setPage(new MainPage());
+                    Player player = new Player(plName);
+                    //here is one of the only times we dont use seed based rand
+                    Random r = new Random();
+                    player.setX(r.nextInt());
+                    player.setY(r.nextInt());
+                    //set new player
+                    c.newPlayer(player);
+                    c.setPage(new MainPage(player.getX(), player.getY(),
+                            c.getScreenWidth(), c.getScreenHeight()));
                 }
             };
         }

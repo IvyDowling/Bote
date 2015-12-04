@@ -2,20 +2,26 @@ package bote.game;
 
 import asciiPanel.AsciiCharacterData;
 import asciiPanel.Drawable;
-import asciiPanel.Render;
+import java.awt.Color;
 
 public abstract class MapPoint implements Drawable {
 
-    private int x, y;
-    private AsciiCharacterData data;
+    protected int x, y;
+    protected AsciiCharacterData data;
 
-    @Override
-    public Render getRender() {
-        return new Render(x, y, data);
+    public MapPoint(int x, int y) {
+        this.x = x;
+        this.y = y;
+        data = new AsciiCharacterData('-', Color.WHITE, Color.BLACK);
     }
 
     @Override
-    public Render transform(int x, int y, AsciiCharacterData d) {
+    public AsciiCharacterData getData() {
+        return data;
+    }
+
+    @Override
+    public void transform(int x, int y, AsciiCharacterData d) {
         if (x != 0) {
             this.x = this.x + x;
         }
@@ -33,7 +39,6 @@ public abstract class MapPoint implements Drawable {
                 data.character = d.character;
             }
         }
-        return getRender();
     }
 
     @Override

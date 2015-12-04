@@ -42,7 +42,8 @@ public class IntroPage extends Page {
                     public void exe(Controller c) {
                         //load game data
                         c.newPlayer(c.loadGame());
-                        c.setPage(new MainPage());
+                        c.setPage(new MainPage(c.getPlayer().getX(), c.getPlayer().getY(),
+                            c.getScreenWidth(), c.getScreenHeight()));
                     }
                 };
             case 78://n

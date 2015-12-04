@@ -40,7 +40,7 @@ public class Screen extends JPanel {
     }
 
     public void addDraw(Drawable d) {
-        draws[d.getX()][d.getY()] = d;
+        draws[d.getY()][d.getX()] = d;
     }
 
     public void addDraw(Drawable[] d) {
@@ -49,11 +49,15 @@ public class Screen extends JPanel {
         }
     }
 
+    public void addDraw(Drawable[][] d) {
+        draws = d;
+    }
+
     public void render() {
-        for (Drawable[] row : draws) {
-            for (Drawable draw : row) {
-                if (draw != null) {
-                    asciiPanel.write(draw.getRender());
+        for (int row = 0; row < draws.length; row++) {
+            for (int col = 0; col < draws[row].length; col++) {
+                if (draws[row][col] != null) {
+                    asciiPanel.write(new Render(col, row, draws[row][col].getData()));
                 }
             }
         }
@@ -68,7 +72,7 @@ public class Screen extends JPanel {
     }
 
     public void clearDraws() {
-        draws = new Drawable[WIDTH][HEIGHT];
+        draws = new Drawable[HEIGHT][WIDTH];
         this.clearScreen();
     }
 

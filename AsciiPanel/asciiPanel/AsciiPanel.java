@@ -856,7 +856,7 @@ public class AsciiPanel extends JPanel {
             throw new IllegalArgumentException("y " + r.getY() + " must be within range [0," + heightInCharacters + ").");
         }
 
-        AsciiCharacterData d = r.getAsciiCharacterData();
+        AsciiCharacterData d = r.getData();
         if (d.foregroundColor == null) {
             d.foregroundColor = defaultForegroundColor;
         }

@@ -2,9 +2,9 @@ package asciiPanel;
 
 public interface Drawable {
 
-    public Render getRender();
+    public AsciiCharacterData getData();
 
-    public Render transform(int x, int y, AsciiCharacterData d);
+    public void transform(int x, int y, AsciiCharacterData d);
 
     public int getX();
 
