@@ -28,7 +28,7 @@ public class Biotope extends MapPoint {
     private Color getColor() {
         int delta = 50;// dont wanna make this + PALETTE.getBlue > 255
         return new Color(0,
-                PALETTE.getGreen() + (int) (dice.nextInt(delta) / 2),
+                PALETTE.getGreen() + (int) (dice.nextInt(2 * delta) / 2),
                 PALETTE.getBlue() + (int) (dice.nextInt(delta) / 2));
     }
 }

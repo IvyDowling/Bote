@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/iv/Work/Git/Bote/src/bote/Bote.java</file>
+            <file>file:/home/iv/Work/Git/Bote/src/bote/game/Biotope.java</file>
             <file>file:/home/iv/Work/Git/Bote/src/bote/MainPage.java</file>
-            <file>file:/home/iv/Work/Git/Bote/src/bote/ImageLib.java</file>
-            <file>file:/home/iv/Work/Git/Bote/src/bote/game/Player.java</file>
-            <file>file:/home/iv/Work/Git/Bote/src/bote/game/Map.java</file>
+            <file>file:/home/iv/Work/Git/Bote/src/bote/game/Island.java</file>
+            <file>file:/home/iv/Work/Git/Bote/src/bote/game/MapPoint.java</file>
+            <file>file:/home/iv/Work/Git/Bote/src/bote/game/WorldMap.java</file>
             <file>file:/home/iv/Work/Git/Bote/src/bote/Controller.java</file>
         </group>
     </open-files>

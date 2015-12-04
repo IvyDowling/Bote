@@ -27,7 +27,9 @@ public class WorldMap {
     }
 
     public Drawable getDraw(int x, int y) {
-        if (dice.nextBoolean()) {
+        Random r = new Random();
+        r.setSeed((((x + y) * (x + y + 1)) / 2) + y);
+        if (r.nextFloat() < 0.99995) {
             return new Biotope(x, y);
         } else {
             return new Island(x, y);
