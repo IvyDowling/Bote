@@ -3,7 +3,7 @@ package asciiPanel;
 import java.awt.Color;
 import java.awt.Point;
 
-public class Render implements Drawable {
+public class Render{
 
     public int x, y;
     public AsciiCharacterData charData;
@@ -30,12 +30,10 @@ public class Render implements Drawable {
         return y;
     }
 
-    @Override
     public AsciiCharacterData getData() {
         return charData;
     }
 
-    @Override
     public void transform(int x, int y, AsciiCharacterData d) {
         this.x = this.x + x;
         this.y = this.y + y;

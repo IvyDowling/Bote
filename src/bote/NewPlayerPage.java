@@ -1,6 +1,5 @@
 package bote;
 
-import asciiPanel.Drawable;
 import asciiPanel.Render;
 import bote.game.Player;
 import java.awt.Color;
@@ -31,11 +30,12 @@ public class NewPlayerPage extends Page {
     }
 
     @Override
-    public Drawable[] getDefaultDraw() {
-        List<Render> temp = new ArrayList<>();
-        temp.addAll(Arrays.asList(makeRenderArray(60, 29, Color.YELLOW, getBackgroundColor(), "press (enter) to finalize your name".toCharArray())));
-        temp.addAll(Arrays.asList(makeRenderArray(18, 8, Color.WHITE, getBackgroundColor(), "Go ahead and type your name:".toCharArray())));
-        return temp.toArray(new Render[temp.size()]);
+    public Render[][] getDefaultDraw() {
+        Render[][] temp = new Render[][]{
+            makeRenderArray(60, 29, Color.YELLOW, getBackgroundColor(), "press (enter) to finalize your name".toCharArray()),
+            makeRenderArray(18, 8, Color.WHITE, getBackgroundColor(), "Go ahead and type your name:".toCharArray())
+        };
+        return temp;
     }
 
     @Override

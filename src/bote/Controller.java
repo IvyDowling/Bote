@@ -1,6 +1,7 @@
 package bote;
 
-import asciiPanel.Drawable;
+import asciiPanel.AsciiCharacterData;
+import asciiPanel.Render;
 import asciiPanel.TileTransformer;
 import bote.game.Player;
 import java.io.File;
@@ -8,7 +9,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Random;
 
 public class Controller {
 
@@ -32,6 +32,10 @@ public class Controller {
         this.addDraw(page.getDefaultDraw());
     }
 
+    public void transform(int x, int y, AsciiCharacterData data) {
+        screen.transform(x, y, data);
+    }
+
     public void console(String out) {
         console.write(out);
     }
@@ -48,15 +52,15 @@ public class Controller {
         screen.addAnimation(t);
     }
 
-    public void addDraw(Drawable r) {
+    public void addDraw(Render r) {
         screen.addDraw(r);
     }
 
-    public void addDraw(Drawable[] r) {
+    public void addDraw(Render[] r) {
         screen.addDraw(r);
     }
-    
-    public void addDraw(Drawable[][] r){
+
+    public void addDraw(Render[][] r) {
         screen.addDraw(r);
     }
 
@@ -67,7 +71,7 @@ public class Controller {
     }
 
     public void clearDraws() {
-        screen.clearDraws();
+        screen.clearView();
     }
 
     public void takeInput(int keyCode) {

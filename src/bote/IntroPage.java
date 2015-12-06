@@ -1,10 +1,8 @@
 package bote;
 
-import asciiPanel.Drawable;
 import asciiPanel.Render;
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class IntroPage extends Page {
@@ -25,12 +23,8 @@ public class IntroPage extends Page {
     }
 
     @Override
-    public Drawable[] getDefaultDraw() {
-        List<Render> temp = new ArrayList<>();
-        temp.addAll(Arrays.asList(ImageLib.getBoteLogo(0, 0, getForegroundColor(), getBackgroundColor())));
-        temp.addAll(Arrays.asList(ImageLib.getBoat(90, 23, getBackgroundColor())));
-        temp.addAll(Arrays.asList(makeRenderArray(30, 25, Color.ORANGE, getBackgroundColor(), introWords)));
-        return temp.toArray(new Render[temp.size()]);
+    public Render[][] getDefaultDraw() {
+        return ImageLib.getGrad();
     }
 
     @Override
@@ -43,7 +37,7 @@ public class IntroPage extends Page {
                         //load game data
                         c.newPlayer(c.loadGame());
                         c.setPage(new MainPage(c.getPlayer().getX(), c.getPlayer().getY(),
-                            c.getScreenWidth(), c.getScreenHeight()));
+                                c.getScreenWidth(), c.getScreenHeight()));
                     }
                 };
             case 78://n

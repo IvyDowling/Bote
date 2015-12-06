@@ -1,11 +1,11 @@
 package bote.game;
 
 import asciiPanel.AsciiCharacterData;
-import asciiPanel.Drawable;
 import java.awt.Color;
 
-public abstract class MapPoint implements Drawable {
+public abstract class MapPoint {
 
+    //these are world coords
     protected int x, y;
     protected AsciiCharacterData data;
 
@@ -15,12 +15,10 @@ public abstract class MapPoint implements Drawable {
         data = new AsciiCharacterData('-', Color.WHITE, Color.BLACK);
     }
 
-    @Override
     public AsciiCharacterData getData() {
         return data;
     }
 
-    @Override
     public void transform(int x, int y, AsciiCharacterData d) {
         if (x != 0) {
             this.x = this.x + x;
@@ -41,12 +39,10 @@ public abstract class MapPoint implements Drawable {
         }
     }
 
-    @Override
     public int getX() {
         return x;
     }
 
-    @Override
     public int getY() {
         return y;
     }

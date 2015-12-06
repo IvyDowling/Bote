@@ -1,9 +1,7 @@
 package bote;
 
 import asciiPanel.AsciiCharacterData;
-import asciiPanel.Drawable;
 import asciiPanel.Render;
-import asciiPanel.TileTransformer;
 import bote.game.WorldMap;
 import java.awt.Color;
 
@@ -26,13 +24,13 @@ public class MainPage extends Page {
     }
 
     @Override
-    public Drawable[] getDefaultDraw() {
-        return new Render[]{
-            new Render(60, 19,
-            new AsciiCharacterData(
-            ImageLib.ALPHA, new Color(255, 100, 0),
-            this.getBackgroundColor())
-            )
+    public Drawable[][] getDefaultDraw() {
+        return new Render[][]{
+            new Render[]{
+                new Render(60, 19, new AsciiCharacterData(
+                ImageLib.ALPHA, new Color(255, 100, 0),
+                this.getBackgroundColor()))
+            }
         };
     }
 
@@ -45,6 +43,7 @@ public class MainPage extends Page {
                     @Override
                     public void exe(Controller c) {
                         c.getPlayer().decY();
+//                        c.transform(-1, 0, null);
                         c.addDraw(world.getFullDraw(c.getPlayer().getX(), c.getPlayer().getY()));
                         c.addDraw(getDefaultDraw());
                     }
@@ -55,6 +54,7 @@ public class MainPage extends Page {
                     @Override
                     public void exe(Controller c) {
                         c.getPlayer().decX();
+//                        c.transform(0, -1, null);
                         c.addDraw(world.getFullDraw(c.getPlayer().getX(), c.getPlayer().getY()));
                         c.addDraw(getDefaultDraw());
 
@@ -66,6 +66,7 @@ public class MainPage extends Page {
                     @Override
                     public void exe(Controller c) {
                         c.getPlayer().incY();
+//                        c.transform(1, 0, null);
                         c.addDraw(world.getFullDraw(c.getPlayer().getX(), c.getPlayer().getY()));
                         c.addDraw(getDefaultDraw());
 
@@ -77,6 +78,7 @@ public class MainPage extends Page {
                     @Override
                     public void exe(Controller c) {
                         c.getPlayer().incX();
+//                        c.transform(0, 1, null);
                         c.addDraw(world.getFullDraw(c.getPlayer().getX(), c.getPlayer().getY()));
                         c.addDraw(getDefaultDraw());
                     }
@@ -86,7 +88,7 @@ public class MainPage extends Page {
                     @Override
                     public void exe(Controller c) {
                         c.console("You cast out your rod...");
-                        if(world.getDraw(c.getPlayer().getX(), c.getPlayer().getY()).getData().backgroundColor.getBlue()%2 == 0){
+                        if (world.getDraw(c.getPlayer().getX(), c.getPlayer().getY()).getData().backgroundColor.getBlue() % 2 > 100) {
                             c.console("You catch a common tuna.");
                         } else {
                             c.console("Nothing bites.");

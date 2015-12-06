@@ -1,6 +1,6 @@
 package bote;
 
-import asciiPanel.Drawable;
+import asciiPanel.Render;
 import java.awt.Color;
 
 public abstract class Page {
@@ -9,7 +9,7 @@ public abstract class Page {
 
     public abstract Color getForegroundColor();
 
-    public abstract Drawable[] getDefaultDraw();
+    public abstract Render[][] getDefaultDraw();
 
     public abstract Command pageAction(int key);
 

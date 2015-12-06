@@ -3,11 +3,15 @@ package bote;
 import asciiPanel.AsciiCharacterData;
 import asciiPanel.Render;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 public class ImageLib {
+
+    private static int WIDTH = 121;
+    private static int HEIGHT = 41;
 
     //using this class to organize the unicode cp437 characters we get
     public static final char H_BAR = '\u00C4';
@@ -77,39 +81,97 @@ public class ImageLib {
         "" + B_L_CORNER + T_R_CORNER + "                 " + V_BAR
     };
 
-    public static final Render[] getBoteLogo(int x, int y, Color fg, Color bg) {
+    public static final Render[][] getBoteLogo(int x, int y, Color fg, Color bg) {
         return makeRenderArray(x, y, fg, bg, boteAscii);
     }
 
-    public static final Render[] getBoat(int x, int y, Color bg) {
-        List<Render> temp = new LinkedList<>();
-        temp.addAll(Arrays.asList(makeRenderArray(x, y, new Color(100, 70, 70), bg, boat)));
-        for (int i = 0; i < 26; i++) {
-            temp.add(new Render(x + i - 2, y + boat.length, new AsciiCharacterData('~', Color.BLUE, new Color(0, 100, 255))));
-        }
-        temp.add(new Render(x + 10, y, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
-        temp.add(new Render(x + 10, y + 1, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
-        temp.add(new Render(x + 11, y + 1, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
-        temp.add(new Render(x + 10, y + 2, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
-        temp.add(new Render(x + 11, y + 2, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
-        temp.add(new Render(x + 12, y + 2, new AsciiCharacterData(MID_SHADE, Color.GRAY, Color.WHITE)));
-        temp.add(new Render(x + 10, y + 3, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
-        temp.add(new Render(x + 11, y + 3, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
-        temp.add(new Render(x + 12, y + 3, new AsciiCharacterData(MID_SHADE, Color.GRAY, Color.WHITE)));
-        temp.add(new Render(x + 10, y + 4, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
-        temp.add(new Render(x + 11, y + 4, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
-        temp.add(new Render(x + 12, y + 4, new AsciiCharacterData(MID_SHADE, Color.GRAY, Color.WHITE)));
-
-        return temp.toArray(new Render[temp.size()]);
-    }
-
-    private static Render[] makeRenderArray(int x, int y, Color fg, Color bg, String[] img) {
-        List<Render> temp = new LinkedList<>();
-        for (int row = 0; row < img.length; row++) {
-            for (int col = 0; col < img[row].length(); col++) {
-                temp.add(new Render(img[row].charAt(col), x + col, y + row, fg, bg));
+//    public static final Render[][] getBoat(int x, int y, Color bg) {
+//        List<Render> temp = new LinkedList<>();
+//        temp.addAll(Arrays.asList(makeRenderArray(x, y, new Color(100, 70, 70), bg, boat)));
+//        for (int i = 0; i < 26; i++) {
+//            temp.add(new Render(x + i - 2, y + boat.length, new AsciiCharacterData('~', Color.BLUE, new Color(0, 100, 255))));
+//        }
+//        temp.add(new Render(x + 10, y, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
+//        temp.add(new Render(x + 10, y + 1, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
+//        temp.add(new Render(x + 11, y + 1, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
+//        temp.add(new Render(x + 10, y + 2, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
+//        temp.add(new Render(x + 11, y + 2, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
+//        temp.add(new Render(x + 12, y + 2, new AsciiCharacterData(MID_SHADE, Color.GRAY, Color.WHITE)));
+//        temp.add(new Render(x + 10, y + 3, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
+//        temp.add(new Render(x + 11, y + 3, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
+//        temp.add(new Render(x + 12, y + 3, new AsciiCharacterData(MID_SHADE, Color.GRAY, Color.WHITE)));
+//        temp.add(new Render(x + 10, y + 4, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
+//        temp.add(new Render(x + 11, y + 4, new AsciiCharacterData(LIGHT_SHADE, Color.GRAY, Color.WHITE)));
+//        temp.add(new Render(x + 12, y + 4, new AsciiCharacterData(MID_SHADE, Color.GRAY, Color.WHITE)));
+//
+//        return temp.toArray(new Render[temp.size()]);
+//    }
+    public static final Render[][] getGrad(int width, int height) {
+        Render[][] temp = new Render[height][width];
+        for (int r = 0; r < height - 1; r++) {
+            for (int c = 0; c < temp[r].length - 1; c++) {
+                if (c > (2 * width / 3)) {
+                    temp[r][c] = new Render(c, r, new AsciiCharacterData(DARK_SHADE, Color.WHITE, Color.BLUE));
+                } else if (c > (width / 3)) {
+                    temp[r][c] = new Render(c, r, new AsciiCharacterData(MID_SHADE, Color.BLUE, Color.CYAN));
+                } else {
+                    temp[r][c] = new Render(c, r, new AsciiCharacterData(LIGHT_SHADE, Color.WHITE, Color.BLUE));
+                }
             }
         }
-        return temp.toArray(new Render[temp.size()]);
+        return temp;
+    }
+
+    public static final Render[][] getGrad() {
+        Render[][] temp = new Render[WIDTH][HEIGHT];
+        for (int x = 0; x < WIDTH - 1; x++) {
+            for (int y = 0; y < HEIGHT - 1; y++) {
+                if (y > (2 * WIDTH / 3)) {
+                    temp[x][y] = new Render(x, y, new AsciiCharacterData(DARK_SHADE, Color.WHITE, Color.BLUE));
+                } else if (y > (WIDTH / 3)) {
+                    temp[x][y] = new Render(x, y, new AsciiCharacterData(MID_SHADE, Color.BLUE, Color.CYAN));
+                } else {
+                    temp[x][y] = new Render(x, y, new AsciiCharacterData(LIGHT_SHADE, Color.WHITE, Color.BLUE));
+                }
+                System.out.print(temp[x][y].getData().character);
+            }
+        }
+        return temp;
+    }
+
+    public static final Render[][] getEmpty(Color color) {
+        Render[][] temp = new Render[HEIGHT][WIDTH];
+        for (int r = 0; r < HEIGHT - 1; r++) {
+            for (int c = 0; c < temp[r].length - 1; c++) {
+                temp[r][c] = new Render(c, r, new AsciiCharacterData(' ', color, color));
+            }
+        }
+        return temp;
+    }
+
+    public static final Render[][] getIntro() {
+        Render[][] temp = new Render[HEIGHT][WIDTH];
+        for (int r = 0; r < boteAscii.length; r++) {
+            temp[r] = makeRenderArray(0, r, Color.WHITE, Color.CYAN, boteAscii[r]);
+        }
+        return temp;
+    }
+
+    private static Render[] makeRenderArray(int x, int y, Color fg, Color bg, String img) {
+        Render[] temp = new Render[img.length()];
+        for (int i = 0; i < img.length(); i++) {
+            temp[i] = new Render(img.charAt(i), x + i, y, fg, bg);
+        }
+        return temp;
+    }
+
+    private static Render[][] makeRenderArray(int x, int y, Color fg, Color bg, String[] img) {
+        List<Render[]> temp = new ArrayList<>();
+        for (int row = 0; row < img.length; row++) {
+            for (int col = 0; col < img[row].length(); col++) {
+                temp.add(makeRenderArray(x, y, fg, bg, img[row]));
+            }
+        }
+        return temp.toArray(new Render[temp.size()][]);
     }
 }

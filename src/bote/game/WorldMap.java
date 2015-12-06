@@ -1,6 +1,7 @@
 package bote.game;
 
-import asciiPanel.Drawable;
+import asciiPanel.AsciiCharacterData;
+import asciiPanel.Render;
 import java.util.Random;
 
 public class WorldMap {
@@ -26,25 +27,25 @@ public class WorldMap {
         dice.setSeed(seed);
     }
 
-    public Drawable getDraw(int x, int y) {
+    public AsciiCharacterData getDraw(int x, int y) {
         Random r = new Random();
         r.setSeed((((x + y) * (x + y + 1)) / 2) + y);
         if (r.nextFloat() < 0.99995) {
-            return new Biotope(x, y);
+            return new Biotope(x, y).getData();
         } else {
-            return new Island(x, y);
+            return new Island(x, y).getData();
         }
     }
 
-    public Drawable[][] getFullDraw(int x, int y) {
+    public AsciiCharacterData[][] getFullDraw(int xs, int ys) {
         //the x y we are given is the midpoint, so we need to 
         //x - width/2 & y - height/2 to get starting index
-        Drawable[][] full = new Drawable[height][width];
-        int row = (x - (width / 2));
-        for (int r = 0; r < height; r++) {
-            int col = (y - (height / 2));
-            for (int c = 0; c < width; c++) {
-                full[r][c] = this.getDraw(row, col);
+        AsciiCharacterData[][] full = new AsciiCharacterData[width][height];
+        int row = (xs - (width / 2));
+        for (int x = 0; x < width; x++) {
+            int col = (ys - (height / 2));
+            for (int y = 0; y < height; y++) {
+                full[x][y] = this.getDraw(row, col);
                 col++;
             }
             row++;
