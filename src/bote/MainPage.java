@@ -24,7 +24,7 @@ public class MainPage extends Page {
     }
 
     @Override
-    public Drawable[][] getDefaultDraw() {
+    public Render[][] getDefaultDraw() {
         return new Render[][]{
             new Render[]{
                 new Render(60, 19, new AsciiCharacterData(
@@ -42,8 +42,7 @@ public class MainPage extends Page {
                 return new Command() {
                     @Override
                     public void exe(Controller c) {
-                        c.getPlayer().decY();
-//                        c.transform(-1, 0, null);
+                        c.getPlayer().decX();
                         c.addDraw(world.getFullDraw(c.getPlayer().getX(), c.getPlayer().getY()));
                         c.addDraw(getDefaultDraw());
                     }
@@ -53,8 +52,7 @@ public class MainPage extends Page {
                 return new Command() {
                     @Override
                     public void exe(Controller c) {
-                        c.getPlayer().decX();
-//                        c.transform(0, -1, null);
+                        c.getPlayer().incY();
                         c.addDraw(world.getFullDraw(c.getPlayer().getX(), c.getPlayer().getY()));
                         c.addDraw(getDefaultDraw());
 
@@ -65,8 +63,7 @@ public class MainPage extends Page {
                 return new Command() {
                     @Override
                     public void exe(Controller c) {
-                        c.getPlayer().incY();
-//                        c.transform(1, 0, null);
+                        c.getPlayer().incX();
                         c.addDraw(world.getFullDraw(c.getPlayer().getX(), c.getPlayer().getY()));
                         c.addDraw(getDefaultDraw());
 
@@ -77,8 +74,7 @@ public class MainPage extends Page {
                 return new Command() {
                     @Override
                     public void exe(Controller c) {
-                        c.getPlayer().incX();
-//                        c.transform(0, 1, null);
+                        c.getPlayer().decY();
                         c.addDraw(world.getFullDraw(c.getPlayer().getX(), c.getPlayer().getY()));
                         c.addDraw(getDefaultDraw());
                     }
@@ -88,11 +84,11 @@ public class MainPage extends Page {
                     @Override
                     public void exe(Controller c) {
                         c.console("You cast out your rod...");
-                        if (world.getDraw(c.getPlayer().getX(), c.getPlayer().getY()).getData().backgroundColor.getBlue() % 2 > 100) {
-                            c.console("You catch a common tuna.");
-                        } else {
-                            c.console("Nothing bites.");
-                        }
+//                        if (world.getDraw(c.getPlayer().getX(), c.getPlayer().getY()).getData().backgroundColor.getBlue() % 2 > 100) {
+//                            c.console("You catch a common tuna.");
+//                        } else {
+//                            c.console("Nothing bites.");
+//                        }
                     }
                 };
 //            case 27://esc
