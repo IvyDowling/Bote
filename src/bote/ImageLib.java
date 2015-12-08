@@ -5,7 +5,6 @@ import asciiPanel.Render;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ImageLib {
@@ -107,15 +106,15 @@ public class ImageLib {
 //        return temp.toArray(new Render[temp.size()]);
 //    }
     public static final Render[][] getGrad(int width, int height) {
-        Render[][] temp = new Render[height][width];
-        for (int r = 0; r < height - 1; r++) {
-            for (int c = 0; c < temp[r].length - 1; c++) {
-                if (c > (2 * width / 3)) {
-                    temp[r][c] = new Render(c, r, new AsciiCharacterData(DARK_SHADE, Color.WHITE, Color.BLUE));
-                } else if (c > (width / 3)) {
-                    temp[r][c] = new Render(c, r, new AsciiCharacterData(MID_SHADE, Color.BLUE, Color.CYAN));
+        Render[][] temp = new Render[width][height];
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < temp[y].length; x++) {
+                if (x > (2 * width / 3)) {
+                    temp[x][y] = new Render(x, y, new AsciiCharacterData(DARK_SHADE, Color.WHITE, Color.BLUE));
+                } else if (x > (width / 3)) {
+                    temp[x][y] = new Render(x, y, new AsciiCharacterData(MID_SHADE, Color.BLUE, Color.CYAN));
                 } else {
-                    temp[r][c] = new Render(c, r, new AsciiCharacterData(LIGHT_SHADE, Color.WHITE, Color.BLUE));
+                    temp[x][y] = new Render(x, y, new AsciiCharacterData(LIGHT_SHADE, Color.WHITE, Color.BLUE));
                 }
             }
         }
@@ -123,20 +122,7 @@ public class ImageLib {
     }
 
     public static final Render[][] getGrad() {
-        Render[][] temp = new Render[WIDTH][HEIGHT];
-        for (int x = 0; x < WIDTH - 1; x++) {
-            for (int y = 0; y < HEIGHT - 1; y++) {
-                if (y > (2 * WIDTH / 3)) {
-                    temp[x][y] = new Render(x, y, new AsciiCharacterData(DARK_SHADE, Color.WHITE, Color.BLUE));
-                } else if (y > (WIDTH / 3)) {
-                    temp[x][y] = new Render(x, y, new AsciiCharacterData(MID_SHADE, Color.BLUE, Color.CYAN));
-                } else {
-                    temp[x][y] = new Render(x, y, new AsciiCharacterData(LIGHT_SHADE, Color.WHITE, Color.BLUE));
-                }
-                System.out.print(temp[x][y].getData().character);
-            }
-        }
-        return temp;
+        return getGrad(WIDTH, HEIGHT);
     }
 
     public static final Render[][] getEmpty(Color color) {

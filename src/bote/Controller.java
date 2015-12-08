@@ -59,8 +59,8 @@ public class Controller {
     public void addDraw(Render[] r) {
         screen.addDraw(r);
     }
-    
-    public void addDraw(Render[][] r){
+
+    public void addDraw(Render[][] r) {
         screen.addDraw(r);
     }
 

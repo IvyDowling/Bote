@@ -678,6 +678,45 @@ public class AsciiPanel extends JPanel {
         return this;
     }
 
+    
+    /**
+     * Write a character to the specified position with the specified foreground
+     * and background colors. This updates the cursor's position but not the
+     * default foreground or background colors.
+     *
+     * @param x the distance from the left to begin writing from
+     * @param y the distance from the top to begin writing from
+     * @param AsciiCharacterData
+     * @return this for convenient chaining of method calls
+     */
+    public AsciiPanel write(int x, int y, AsciiCharacterData data) {
+        if (data.character < 0 || data.character >= glyphs.length) {
+            throw new IllegalArgumentException("character " + data.character + " must be within range [0," + glyphs.length + "].");
+        }
+
+        if (x < 0 || x >= widthInCharacters) {
+            throw new IllegalArgumentException("x " + x + " must be within range [0," + widthInCharacters + ")");
+        }
+
+        if (y < 0 || y >= heightInCharacters) {
+            throw new IllegalArgumentException("y " + y + " must be within range [0," + heightInCharacters + ")");
+        }
+
+        if (data.foregroundColor == null) {
+            data.foregroundColor = defaultForegroundColor;
+        }
+        if (data.backgroundColor == null) {
+            data.backgroundColor = defaultBackgroundColor;
+        }
+
+        chars[x][y] = data.character;
+        foregroundColors[x][y] = data.foregroundColor;
+        backgroundColors[x][y] = data.backgroundColor;
+        cursorX = x + 1;
+        cursorY = y;
+        return this;
+    }
+    
     /**
      * Write a string to the cursor's position. This updates the cursor's
      * position.

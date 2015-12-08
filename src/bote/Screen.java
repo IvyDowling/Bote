@@ -15,18 +15,18 @@ public class Screen extends JPanel {
     private static Screen screen = new Screen();
     private static AsciiPanel asciiPanel;
     private List<TileTransformer> transformList;
-    private View view;
+    private final View view;
 
     public Screen() {
         this.setSize(DIMENSION);
         this.setBounds(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
         this.add(asciiPanel = new AsciiPanel(WIDTH, HEIGHT));
         this.setBackground(Color.BLACK);
-
+        view = new View(WIDTH, HEIGHT);
         transformList = new ArrayList<>();
         asciiPanel.setBackground(Color.BLACK);
         asciiPanel.setForeground(Color.WHITE);
-        view = new View(WIDTH, HEIGHT);
+        System.out.println(view.toString());
     }
 
     public void addAnimation(TileTransformer t) {
@@ -44,15 +44,17 @@ public class Screen extends JPanel {
     }
 
     public void addDraw(Render r) {
-        view.add(r.x, r.y, r.getData());
+        if (r != null) {
+            view.add(r.x, r.y, r.getData());
+        }
     }
 
     public void addDraw(Render[] r) {
         for (Render rnd : r) {
-            view.add(rnd.x, rnd.y, rnd.getData());
+            this.addDraw(rnd);
         }
     }
-    
+
     public void addDraw(Render[][] r) {
         for (Render[] r1 : r) {
             this.addDraw(r1);
@@ -68,10 +70,10 @@ public class Screen extends JPanel {
     }
 
     public void render() {
-        Render[][] draws = view.getRender();
-        for (Render[] ln : draws) {
-            for (Render r : ln) {
-                asciiPanel.write(r);
+        AsciiCharacterData[][] draws = view.getDraw();
+        for (int x = 0; x < draws.length; x++) {
+            for (int y = 0; y < draws[x].length; y++) {
+                asciiPanel.write(x, y, draws[x][y]);
             }
         }
         if (!transformList.isEmpty()) {
@@ -101,25 +103,31 @@ public class Screen extends JPanel {
     }
 
     public void setForegroundColor(Color fg) {
-        asciiPanel.setDefaultForegroundColor(fg);
-        asciiPanel.clear();
-        asciiPanel.withEachTile(new TileTransformer() {
-            @Override
-            public void transformTile(int x, int y, AsciiCharacterData data) {
-                data.foregroundColor = asciiPanel.getDefaultForegroundColor();
-            }
-        });
+        if (fg != null) {
+            view.setForegroundColor(fg);
+            asciiPanel.setDefaultForegroundColor(fg);
+            asciiPanel.clear();
+            asciiPanel.withEachTile(new TileTransformer() {
+                @Override
+                public void transformTile(int x, int y, AsciiCharacterData data) {
+                    data.foregroundColor = asciiPanel.getDefaultForegroundColor();
+                }
+            });
+        }
     }
 
     public void setBackgroundColor(Color bg) {
-        asciiPanel.setDefaultBackgroundColor(bg);
-        asciiPanel.clear();
-        asciiPanel.withEachTile(new TileTransformer() {
-            @Override
-            public void transformTile(int x, int y, AsciiCharacterData data) {
-                data.backgroundColor = asciiPanel.getDefaultBackgroundColor();
-            }
-        });
+        if (bg != null) {
+            view.setBackgroundColor(bg);
+            asciiPanel.setDefaultBackgroundColor(bg);
+            asciiPanel.clear();
+            asciiPanel.withEachTile(new TileTransformer() {
+                @Override
+                public void transformTile(int x, int y, AsciiCharacterData data) {
+                    data.backgroundColor = asciiPanel.getDefaultBackgroundColor();
+                }
+            });
+        }
     }
 
     public int getAsciiPanelWidth() {
