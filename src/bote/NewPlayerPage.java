@@ -94,8 +94,8 @@ public class NewPlayerPage extends Page {
     }
 
     @Override
-
-    public void playViewer() {
+    public Viewer playViewer() {
+        return null;
     }
 
     private static Render[] makeRenderArray(int x, int y, Color fg, Color bg, char[] img) {

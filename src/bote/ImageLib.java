@@ -69,6 +69,11 @@ public class ImageLib {
         "        \\::/____/                 ~~                                       \\::/    /        ",
         "         ~~                                                                 \\/____/         "};
 
+    private static final String[] introWords = new String[]{
+        "(c)ontinue",
+        "(n)ew"
+    };
+
     private static final String[] boat = {
         "         " + DOUBLE_V_BAR + "    ",
         "         " + DOUBLE_V_BAR + "    ",
@@ -136,9 +141,12 @@ public class ImageLib {
     }
 
     public static final Render[][] getIntro() {
-        Render[][] temp = new Render[HEIGHT][WIDTH];
+        Render[][] temp = new Render[WIDTH][HEIGHT];
         for (int r = 0; r < boteAscii.length; r++) {
-            temp[r] = makeRenderArray(0, r, Color.WHITE, Color.CYAN, boteAscii[r]);
+            temp[r] = makeRenderArray(0, r, Color.CYAN, Color.BLACK, boteAscii[r]);
+        }
+        for (int r = boteAscii.length + 1 ; r < boteAscii.length + 3; r++) {
+            temp[r] = makeRenderArray(25, r + 3, Color.ORANGE, Color.BLACK, introWords[r - boteAscii.length - 1]);
         }
         return temp;
     }

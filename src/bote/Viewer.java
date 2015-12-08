@@ -1,5 +1,6 @@
 package bote;
 
+import asciiPanel.AsciiCharacterData;
 import asciiPanel.Render;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,7 +10,7 @@ import javax.swing.Timer;
 
 public class Viewer {
 
-    private final List<Render[]> vid;
+    private final List<AsciiCharacterData[][]> vid;
     private int index = 0;
     private boolean isPlaying, isFinished;
     private int delay = 1000; //milliseconds
@@ -25,32 +26,32 @@ public class Viewer {
         isPlaying = false;
     }
 
-    public Viewer(List<Render[]> v) {
+    public Viewer(List<AsciiCharacterData[][]> v) {
         vid = v;
         isPlaying = false;
     }
 
-    public Render[] getCurrentRender() {
+    public AsciiCharacterData[][] getCurrentRender() {
         if (index == vid.size()) {
             isPlaying = false;
         }
         if (isPlaying) {
             return vid.get(index);
         }
-        return new Render[]{};
+        return new AsciiCharacterData[][]{};
     }
 
-    public Viewer addRenderArray(Render[] r) {
+    public Viewer addRenderArray(AsciiCharacterData[][] r) {
         vid.add(r);
         return this;
     }
 
-    public Viewer addRenderArray(List<Render[]> r) {
+    public Viewer addRenderArray(List<AsciiCharacterData[][]> r) {
         vid.addAll(r);
         return this;
     }
 
-    public void play() {
+    public Viewer play() {
         isPlaying = true;
         ActionListener taskPerformer = new ActionListener() {
             @Override
@@ -59,6 +60,7 @@ public class Viewer {
             }
         };
         new Timer(delay, taskPerformer).start();
+        return this;
     }
 
     public void stop() {
@@ -69,8 +71,8 @@ public class Viewer {
     public boolean isPlaying() {
         return isPlaying;
     }
-    
-    public boolean isFinished(){
+
+    public boolean isFinished() {
         return isFinished;
     }
 

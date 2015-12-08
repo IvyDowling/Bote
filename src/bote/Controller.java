@@ -29,7 +29,21 @@ public class Controller {
         page = p;
         screen.setBackgroundColor(page.getBackgroundColor());
         screen.setForegroundColor(page.getForegroundColor());
+        //play viewer
+        this.playViewer(page.playViewer());
         this.addDraw(page.getDefaultDraw());
+    }
+
+    public void playViewer(Viewer v) {
+        if (v != null) {
+            v.play();
+            while (v.isPlaying()) {
+                screen.clearScreen();
+                screen.addDraw(v.getCurrentRender());
+                screen.render();
+                v.stop();
+            }
+        }
     }
 
     public void transform(int x, int y, AsciiCharacterData data) {

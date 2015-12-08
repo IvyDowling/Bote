@@ -37,6 +37,22 @@ public class WorldMap {
         }
     }
 
+    public Render[] getRow(int ys) {
+        Render[] temp = new Render[width];
+        for (int xs = 0; xs < width; xs++) {
+            temp[xs] = new Render(xs, ys, this.getDraw(x + xs, y));
+        }
+        return temp;
+    }
+
+    public Render[] getColumn(int xs) {
+        Render[] temp = new Render[height];
+        for (int yp = 0; yp < height; yp++) {
+            temp[yp] = new Render(xs, yp, this.getDraw(x, y + yp));
+        }
+        return temp;
+    }
+
     public AsciiCharacterData[][] getFullDraw(int xs, int ys) {
         //the x y we are given is the midpoint, so we need to 
         //x - width/2 & y - height/2 to get starting index
@@ -51,6 +67,22 @@ public class WorldMap {
             row++;
         }
         return full;
+    }
+
+    public void incPlayerX() {
+        x = x + 1;
+    }
+
+    public void decPlayerX() {
+        x = x - 1;
+    }
+
+    public void incPlayerY() {
+        y = y + 1;
+    }
+
+    public void decPlayerY() {
+        y = y - 1;
     }
 
 }

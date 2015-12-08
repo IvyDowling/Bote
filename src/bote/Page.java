@@ -4,6 +4,8 @@ import asciiPanel.Render;
 import java.awt.Color;
 
 public abstract class Page {
+    
+    protected Viewer viewer;
 
     public abstract Color getBackgroundColor();
 
@@ -13,6 +15,6 @@ public abstract class Page {
 
     public abstract Command pageAction(int key);
 
-    public abstract void playViewer();
+    public abstract Viewer playViewer();
 
 }

@@ -79,35 +79,36 @@ public class View {
         }
     }
 
-    private void transformDown() {
-        for (int y = 0; y < height - 1; y++) {
+    private void transformUp() {
+        for (int y = height - 1; y > 0; y--) {
             for (int x = 0; x < width; x++) {
-                view[y][x] = view[x + 1][y];
+                if (y - 1 < 0) {
+                    view[x][0] = new AsciiCharacterData(' ', Color.BLACK, Color.BLACK);
+                } else {
+                    view[x][y] = view[x][y - 1];
+                }
             }
-        }
-        for (int x = 0; x < width; x++) {
-            view[view.length][x] = new AsciiCharacterData(' ', Color.BLACK, Color.BLACK);
         }
     }
 
-    private void transformUp() {
-        for (int y = 1; y < height; y++) {
+    private void transformDown() {
+        for (int y = 0; y < height - 1; y++) {
             for (int x = 0; x < width; x++) {
-                view[x][y] = view[x - 1][y];
+                view[x][y] = view[x][y + 1];
             }
         }
         for (int x = 0; x < width; x++) {
-            view[x][0] = new AsciiCharacterData(' ', Color.BLACK, Color.BLACK);
+            view[x][height - 1] = new AsciiCharacterData(' ', Color.BLACK, Color.BLACK);
         }
     }
 
     private void transformRight() {
         for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
+            for (int x = 0; x < width - 1; x++) {
                 if (x + 1 > width) {
                     view[0][y] = new AsciiCharacterData(' ', Color.BLACK, Color.BLACK);
                 } else {
-                    view[x][y] = view[x][y + 1];
+                    view[x][y] = view[x + 1][y];
                 }
             }
         }
@@ -115,9 +116,9 @@ public class View {
 
     private void transformLeft() {
         for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
+            for (int x = width - 1; x > 0; x--) {
                 if (x - 1 < 0) {
-                    view[width - 1][y] = new AsciiCharacterData(' ', Color.BLACK, Color.BLACK);
+                    view[0][y] = new AsciiCharacterData(' ', Color.BLACK, Color.BLACK);
                 } else {
                     view[x][y] = view[x - 1][y];
                 }
@@ -139,7 +140,7 @@ public class View {
             }
         }
         if (y < 0) {
-            for (int i = 0; i < y; i++) {
+            for (int i = y; i < 0; i++) {
                 this.transformDown();
             }
         }
@@ -149,7 +150,7 @@ public class View {
             }
         }
         if (x < 0) {
-            for (int i = 0; i < x; i++) {
+            for (int i = x; i < 0; i++) {
                 this.transformLeft();
             }
         }

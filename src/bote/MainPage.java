@@ -8,9 +8,12 @@ import java.awt.Color;
 public class MainPage extends Page {
 
     private final WorldMap world;
+    private final Viewer viewer;
 
     public MainPage(int x, int y, int w, int h) {
         world = new WorldMap(x, y, w, h);
+        viewer = new Viewer();
+        viewer.addRenderArray(world.getFullDraw(w, h));
     }
 
     @Override
@@ -43,8 +46,9 @@ public class MainPage extends Page {
                     @Override
                     public void exe(Controller c) {
                         c.getPlayer().decX();
-                        c.addDraw(world.getFullDraw(c.getPlayer().getX(), c.getPlayer().getY()));
-                        c.addDraw(getDefaultDraw());
+                        world.decPlayerX();
+                        c.transform(-1, 0, null);
+                        c.addDraw(world.getColumn(0));
                     }
                 };
             case 87://w
@@ -53,9 +57,9 @@ public class MainPage extends Page {
                     @Override
                     public void exe(Controller c) {
                         c.getPlayer().incY();
-                        c.addDraw(world.getFullDraw(c.getPlayer().getX(), c.getPlayer().getY()));
-                        c.addDraw(getDefaultDraw());
-
+                        world.incPlayerY();
+                        c.transform(0, 1, null);
+                        c.addDraw(world.getRow(0));
                     }
                 };
             case 68://d
@@ -64,9 +68,9 @@ public class MainPage extends Page {
                     @Override
                     public void exe(Controller c) {
                         c.getPlayer().incX();
-                        c.addDraw(world.getFullDraw(c.getPlayer().getX(), c.getPlayer().getY()));
-                        c.addDraw(getDefaultDraw());
-
+                        world.incPlayerX();
+                        c.transform(1, 0, null);
+                        c.addDraw(world.getColumn(c.getScreenWidth() - 1));
                     }
                 };
             case 83://s
@@ -75,8 +79,9 @@ public class MainPage extends Page {
                     @Override
                     public void exe(Controller c) {
                         c.getPlayer().decY();
-                        c.addDraw(world.getFullDraw(c.getPlayer().getX(), c.getPlayer().getY()));
-                        c.addDraw(getDefaultDraw());
+                        world.decPlayerY();
+                        c.transform(0, -1, null);
+                        c.addDraw(world.getRow(c.getScreenHeight() - 1));
                     }
                 };
             case 70: //f - fish
@@ -114,7 +119,8 @@ public class MainPage extends Page {
     }
 
     @Override
-    public void playViewer() {
+    public Viewer playViewer() {
+        return viewer;
     }
 
 }

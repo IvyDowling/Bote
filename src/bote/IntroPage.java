@@ -7,11 +7,6 @@ import java.util.List;
 
 public class IntroPage extends Page {
 
-    private final String[] introWords = new String[]{
-        "(c)ontinue",
-        "(n)ew"
-    };
-
     @Override
     public Color getBackgroundColor() {
         return Color.BLACK;
@@ -24,7 +19,7 @@ public class IntroPage extends Page {
 
     @Override
     public Render[][] getDefaultDraw() {
-        return ImageLib.getGrad();
+        return ImageLib.getIntro();
     }
 
     @Override
@@ -57,7 +52,8 @@ public class IntroPage extends Page {
     }
 
     @Override
-    public void playViewer() {
+    public Viewer playViewer() {
+        return null;
     }
 
     private static Render[] makeRenderArray(int x, int y, Color fg, Color bg, String[] img) {
