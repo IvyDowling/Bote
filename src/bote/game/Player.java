@@ -4,11 +4,22 @@ import java.io.Serializable;
 
 public class Player implements Serializable {
 
+    private static Player player;
     private String name;
     private int x, y;
 
     public Player(String nm) {
+        player = new Player();
+        this.setName(nm);
+    }
+    
+    public Player(){
+        name = "";
+    }
+    
+    public final Player setName(String nm){
         name = nm;
+        return player;
     }
 
     public String getName() {
@@ -49,6 +60,13 @@ public class Player implements Serializable {
 
     @Override
     public String toString() {
-        return name;
+        return name + " x: " + x + ", y: " + y;
+    }
+    
+    public static Player getInstance() {
+        if (player == null) {
+            Player screen = new Player();
+        }
+        return player;
     }
 }

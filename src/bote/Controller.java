@@ -29,6 +29,7 @@ public class Controller {
         page = p;
         screen.setBackgroundColor(page.getBackgroundColor());
         screen.setForegroundColor(page.getForegroundColor());
+        screen.addAnimation(page.getDefaultAnimation());
         //play viewer
         this.playViewer(page.playViewer());
         this.addDraw(page.getDefaultDraw());
@@ -149,6 +150,7 @@ public class Controller {
         } catch (Exception e) {
             System.out.println("I didn't save it");
         }
+        System.out.println("saving done");
     }
 
     public int getScreenWidth() {

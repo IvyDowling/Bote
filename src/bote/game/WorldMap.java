@@ -27,28 +27,28 @@ public class WorldMap {
         dice.setSeed(seed);
     }
 
-    public AsciiCharacterData getDraw(int x, int y) {
-        Random r = new Random();
-        r.setSeed((((x + y) * (x + y + 1)) / 2) + y);
-        if (r.nextFloat() < 0.99995) {
-            return new Biotope(x, y).getData();
+    public AsciiCharacterData getDraw(int worldX, int worldY) {
+//        Random r = new Random();
+//        r.setSeed((((worldX + worldY) * (worldX + worldY + 1)) / 2) + worldY);
+        if (dice.nextFloat() < 0.99995) {
+            return new Biotope(worldX, worldY).getData();
         } else {
-            return new Island(x, y).getData();
+            return new Island(worldX, worldY).getData();
         }
     }
 
-    public Render[] getRow(int ys) {
+    public Render[] getRow(int renderY) {
         Render[] temp = new Render[width];
-        for (int xs = 0; xs < width; xs++) {
-            temp[xs] = new Render(xs, ys, this.getDraw(x + xs, y));
+        for (int renderX = 0; renderX < width; renderX++) {
+            temp[renderX] = new Render(renderX, renderY, this.getDraw(x + renderX, y));
         }
         return temp;
     }
 
-    public Render[] getColumn(int xs) {
+    public Render[] getColumn(int renderX) {
         Render[] temp = new Render[height];
-        for (int yp = 0; yp < height; yp++) {
-            temp[yp] = new Render(xs, yp, this.getDraw(x, y + yp));
+        for (int renderY = 0; renderY < height; renderY++) {
+            temp[renderY] = new Render(renderX, renderY, this.getDraw(x, y + renderY));
         }
         return temp;
     }

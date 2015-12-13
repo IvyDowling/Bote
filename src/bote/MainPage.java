@@ -2,6 +2,7 @@ package bote;
 
 import asciiPanel.AsciiCharacterData;
 import asciiPanel.Render;
+import asciiPanel.TileTransformer;
 import bote.game.WorldMap;
 import java.awt.Color;
 
@@ -27,14 +28,22 @@ public class MainPage extends Page {
     }
 
     @Override
-    public Render[][] getDefaultDraw() {
-        return new Render[][]{
-            new Render[]{
-                new Render(60, 19, new AsciiCharacterData(
-                ImageLib.ALPHA, new Color(255, 100, 0),
-                this.getBackgroundColor()))
+    public TileTransformer[] getDefaultAnimation() {
+        return new TileTransformer[]{
+            new TileTransformer() {
+                @Override
+                public void transformTile(int x, int y, AsciiCharacterData data) {
+                    if(x == 60 && y == 20){
+                        data.character = ImageLib.ALPHA;
+                    }
+                }
             }
         };
+    }
+
+    @Override
+    public Render[][] getDefaultDraw() {
+        return new Render[][]{};
     }
 
     @Override
@@ -88,12 +97,20 @@ public class MainPage extends Page {
                 return new Command() {
                     @Override
                     public void exe(Controller c) {
-                        c.console("You cast out your rod...");
+                        c.console("You think fondly of Michael...");
 //                        if (world.getDraw(c.getPlayer().getX(), c.getPlayer().getY()).getData().backgroundColor.getBlue() % 2 > 100) {
 //                            c.console("You catch a common tuna.");
 //                        } else {
 //                            c.console("Nothing bites.");
 //                        }
+                    }
+                };
+            case 27: //esc
+                return new Command() {
+                    @Override
+                    public void exe(Controller c) {
+                        c.console("saved");
+                        c.save();
                     }
                 };
 //            case 27://esc

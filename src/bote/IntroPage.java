@@ -1,6 +1,7 @@
 package bote;
 
 import asciiPanel.Render;
+import asciiPanel.TileTransformer;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +65,11 @@ public class IntroPage extends Page {
             }
         }
         return temp.toArray(new Render[temp.size()]);
+    }
+
+    @Override
+    public TileTransformer[] getDefaultAnimation() {
+        return new TileTransformer[]{};
     }
 
 } 

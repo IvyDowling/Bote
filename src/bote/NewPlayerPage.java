@@ -1,6 +1,7 @@
 package bote;
 
 import asciiPanel.Render;
+import asciiPanel.TileTransformer;
 import bote.game.Player;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -29,6 +30,11 @@ public class NewPlayerPage extends Page {
         return new Color(0, 170, 255);
     }
 
+    @Override
+    public TileTransformer[] getDefaultAnimation() {
+        return new TileTransformer[]{};
+    }
+    
     @Override
     public Render[][] getDefaultDraw() {
         Render[][] temp = new Render[][]{
