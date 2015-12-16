@@ -33,7 +33,7 @@ public class MainPage extends Page {
             new TileTransformer() {
                 @Override
                 public void transformTile(int x, int y, AsciiCharacterData data) {
-                    if(x == 60 && y == 20){
+                    if (x == 60 && y == 20) {
                         data.character = ImageLib.ALPHA;
                     }
                 }
@@ -97,7 +97,7 @@ public class MainPage extends Page {
                 return new Command() {
                     @Override
                     public void exe(Controller c) {
-                        c.console("You think fondly of Michael...");
+                        c.console("You cast your rod...");
 //                        if (world.getDraw(c.getPlayer().getX(), c.getPlayer().getY()).getData().backgroundColor.getBlue() % 2 > 100) {
 //                            c.console("You catch a common tuna.");
 //                        } else {

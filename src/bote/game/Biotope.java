@@ -1,7 +1,6 @@
 package bote.game;
 
 import asciiPanel.AsciiCharacterData;
-import asciiPanel.Render;
 import java.awt.Color;
 import java.util.Random;
 

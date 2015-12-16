@@ -79,6 +79,22 @@ public class Controller {
         screen.addDraw(r);
     }
 
+    public void addCol(int x, AsciiCharacterData[] r) {
+        if (r.length == this.getScreenHeight()) {
+            for (int y = 0; y < r.length; y++) {
+                screen.addDraw(new Render(x, y, r[y]));
+            }
+        }
+    }
+
+    public void addRow(int y, AsciiCharacterData[] r) {
+        if (r.length == this.getScreenWidth()) {
+            for (int x = 0; x < r.length; x++) {
+                screen.addDraw(new Render(x, y, r[x]));
+            }
+        }
+    }
+
     public void addDraw(AsciiCharacterData[][] r) {
         screen.addDraw(r);
     }

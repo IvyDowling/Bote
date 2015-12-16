@@ -2,6 +2,7 @@ package bote.game;
 
 import asciiPanel.AsciiCharacterData;
 import asciiPanel.Render;
+import java.awt.Color;
 import java.util.Random;
 
 public class WorldMap {
@@ -30,7 +31,9 @@ public class WorldMap {
     public AsciiCharacterData getDraw(int worldX, int worldY) {
 //        Random r = new Random();
 //        r.setSeed((((worldX + worldY) * (worldX + worldY + 1)) / 2) + worldY);
-        if (dice.nextFloat() < 0.99995) {
+        if (dice.nextInt() % 500 == 7) {
+            return new Treasure(worldX, worldY).getData();
+        } else if (dice.nextFloat() < 0.99995) {
             return new Biotope(worldX, worldY).getData();
         } else {
             return new Island(worldX, worldY).getData();

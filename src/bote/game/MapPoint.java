@@ -9,6 +9,12 @@ public abstract class MapPoint {
     protected int x, y;
     protected AsciiCharacterData data;
 
+    public MapPoint(int x, int y, AsciiCharacterData d) {
+        this.x = x;
+        this.y = y;
+        data = d;
+    }
+    
     public MapPoint(int x, int y) {
         this.x = x;
         this.y = y;
