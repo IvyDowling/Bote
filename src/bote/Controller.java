@@ -110,7 +110,7 @@ public class Controller {
     }
 
     public void takeInput(int keyCode) {
-        console.write(keyCode + " pressed");
+//        console.write(keyCode + " pressed");
         execute(page.pageAction(keyCode));
 //        switch (keyCode) {
 //            case 65://a

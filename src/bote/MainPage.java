@@ -14,7 +14,7 @@ public class MainPage extends Page {
     public MainPage(int x, int y, int w, int h) {
         world = new WorldMap(x, y, w, h);
         viewer = new Viewer();
-        viewer.addRenderArray(world.getFullDraw(w, h));
+        viewer.addRenderArray(world.getFullDraw());
     }
 
     @Override
@@ -35,6 +35,7 @@ public class MainPage extends Page {
                 public void transformTile(int x, int y, AsciiCharacterData data) {
                     if (x == 60 && y == 20) {
                         data.character = ImageLib.ALPHA;
+                        data.foregroundColor = Color.ORANGE;
                     }
                 }
             }
@@ -57,7 +58,8 @@ public class MainPage extends Page {
                         c.getPlayer().decX();
                         world.decPlayerX();
                         c.transform(-1, 0, null);
-                        c.addDraw(world.getColumn(0));
+                        c.addCol(0, world.getLeftCol());
+//                        c.addDraw(world.getFullDraw());
                     }
                 };
             case 87://w
@@ -65,10 +67,12 @@ public class MainPage extends Page {
                 return new Command() {
                     @Override
                     public void exe(Controller c) {
-                        c.getPlayer().incY();
-                        world.incPlayerY();
+                        c.getPlayer().decY();
+                        world.decPlayerY();
                         c.transform(0, 1, null);
-                        c.addDraw(world.getRow(0));
+                        c.addRow(0, world.getTopRow());
+//                        c.addDraw(world.getFullDraw());
+
                     }
                 };
             case 68://d
@@ -79,7 +83,9 @@ public class MainPage extends Page {
                         c.getPlayer().incX();
                         world.incPlayerX();
                         c.transform(1, 0, null);
-                        c.addDraw(world.getColumn(c.getScreenWidth() - 1));
+                        c.addCol(c.getScreenWidth() - 1, world.getRightCol());
+//                        c.addDraw(world.getFullDraw());
+
                     }
                 };
             case 83://s
@@ -87,10 +93,12 @@ public class MainPage extends Page {
                 return new Command() {
                     @Override
                     public void exe(Controller c) {
-                        c.getPlayer().decY();
-                        world.decPlayerY();
+                        c.getPlayer().incY();
+                        world.incPlayerY();
                         c.transform(0, -1, null);
-                        c.addDraw(world.getRow(c.getScreenHeight() - 1));
+                        c.addRow(c.getScreenHeight() - 1, world.getBottomRow());
+//                        c.addDraw(world.getFullDraw());
+
                     }
                 };
             case 70: //f - fish

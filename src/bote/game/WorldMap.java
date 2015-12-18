@@ -2,21 +2,20 @@ package bote.game;
 
 import asciiPanel.AsciiCharacterData;
 import asciiPanel.Render;
-import java.awt.Color;
 import java.util.Random;
 
 public class WorldMap {
 
     private Random dice;
-    private int width, height;
-    private int x, y;
+    private final int WIDTH, HEIGHT;
+    private int playerX, playerY;
 
     public WorldMap(int x, int y, int w, int h) {
         // gives us the centerpoint
-        this.x = x;
-        this.y = y;
-        width = w;
-        height = h;
+        this.playerX = x;
+        this.playerY = y;
+        WIDTH = w;
+        HEIGHT = h;
         this.setSeed(x, y);
     }
 
@@ -28,64 +27,107 @@ public class WorldMap {
         dice.setSeed(seed);
     }
 
+    /**
+     *
+     * @param worldX: this is the world value, not the screen x
+     * @param worldY: this is the world value, not the screen y
+     * @return
+     */
     public AsciiCharacterData getDraw(int worldX, int worldY) {
-//        Random r = new Random();
-//        r.setSeed((((worldX + worldY) * (worldX + worldY + 1)) / 2) + worldY);
-        if (dice.nextInt() % 500 == 7) {
-            return new Treasure(worldX, worldY).getData();
-        } else if (dice.nextFloat() < 0.99995) {
+        Random r = new Random();
+        r.setSeed((((worldX + worldY) * (worldX + worldY + 1)) / 2) + worldY);
+//        if ((dice.nextFloat() * 10) % 1 == 7) {
+//        return new Treasure(worldX, worldY).getData();
+//        } else 
+        if (r.nextFloat() < 0.99995) {
             return new Biotope(worldX, worldY).getData();
         } else {
             return new Island(worldX, worldY).getData();
         }
     }
 
+    /**
+     *
+     * @param screenX : the screen x
+     * @param screenY : the screen y
+     * @return the relative world tile at this screen point
+     */
+    public AsciiCharacterData getDrawOnScreen(int screenX, int screenY) {
+        return getDraw(playerX + (screenX - ((WIDTH - 1) / 2)), playerY + (screenY - ((HEIGHT - 1) / 2)));
+    }
+
     public Render[] getRow(int renderY) {
-        Render[] temp = new Render[width];
-        for (int renderX = 0; renderX < width; renderX++) {
-            temp[renderX] = new Render(renderX, renderY, this.getDraw(x + renderX, y));
+        Render[] temp = new Render[WIDTH];
+        for (int renderX = 0; renderX < WIDTH; renderX++) {
+            temp[renderX] = new Render(renderX, renderY, this.getDrawOnScreen(renderX, renderY));
         }
         return temp;
     }
 
     public Render[] getColumn(int renderX) {
-        Render[] temp = new Render[height];
-        for (int renderY = 0; renderY < height; renderY++) {
-            temp[renderY] = new Render(renderX, renderY, this.getDraw(x, y + renderY));
+        Render[] temp = new Render[HEIGHT];
+        for (int renderY = 0; renderY < HEIGHT; renderY++) {
+            temp[renderY] = new Render(renderX, renderY, this.getDrawOnScreen(renderX, renderY));
         }
         return temp;
     }
 
-    public AsciiCharacterData[][] getFullDraw(int xs, int ys) {
-        //the x y we are given is the midpoint, so we need to 
-        //x - width/2 & y - height/2 to get starting index
-        AsciiCharacterData[][] full = new AsciiCharacterData[width][height];
-        int row = (xs - (width / 2));
-        for (int x = 0; x < width; x++) {
-            int col = (ys - (height / 2));
-            for (int y = 0; y < height; y++) {
-                full[x][y] = this.getDraw(row, col);
-                col++;
+    public AsciiCharacterData[] getTopRow() {
+        AsciiCharacterData[] temp = new AsciiCharacterData[WIDTH];
+        for (int renderX = 0; renderX < WIDTH; renderX++) {
+            temp[renderX] = this.getDrawOnScreen(renderX, 0);
+        }
+        return temp;
+    }
+
+    public AsciiCharacterData[] getBottomRow() {
+        AsciiCharacterData[] temp = new AsciiCharacterData[WIDTH];
+        for (int renderX = 0; renderX < WIDTH; renderX++) {
+            temp[renderX] = this.getDrawOnScreen(renderX, HEIGHT - 1);
+        }
+        return temp;
+    }
+
+    public AsciiCharacterData[] getLeftCol() {
+        AsciiCharacterData[] temp = new AsciiCharacterData[HEIGHT];
+        for (int renderY = 0; renderY < HEIGHT; renderY++) {
+            temp[renderY] = this.getDrawOnScreen(0, renderY);
+        }
+        return temp;
+    }
+
+    public AsciiCharacterData[] getRightCol() {
+        AsciiCharacterData[] temp = new AsciiCharacterData[HEIGHT];
+        for (int renderY = 0; renderY < HEIGHT; renderY++) {
+            temp[renderY] = this.getDrawOnScreen(WIDTH - 1, renderY);
+        }
+        return temp;
+    }
+
+    public AsciiCharacterData[][] getFullDraw() {
+        AsciiCharacterData[][] full = new AsciiCharacterData[WIDTH][HEIGHT];
+        for (int rows = 0; rows < HEIGHT; rows++) {
+            for (int cols = 0; cols < WIDTH; cols++) {
+                full[cols][rows] = this.getDrawOnScreen(cols, rows);
             }
-            row++;
         }
         return full;
     }
 
     public void incPlayerX() {
-        x = x + 1;
+        playerX = playerX + 1;
     }
 
     public void decPlayerX() {
-        x = x - 1;
+        playerX = playerX - 1;
     }
 
     public void incPlayerY() {
-        y = y + 1;
+        playerY = playerY + 1;
     }
 
     public void decPlayerY() {
-        y = y - 1;
+        playerY = playerY - 1;
     }
 
 }
