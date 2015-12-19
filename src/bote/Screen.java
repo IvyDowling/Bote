@@ -4,6 +4,7 @@ import asciiPanel.*;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.JPanel;
 
@@ -16,6 +17,8 @@ public class Screen extends JPanel {
     private static AsciiPanel asciiPanel;
     private List<TileTransformer> transformList;
     private final View view;
+    private TileTransformer filter;
+    private AsciiCharacterData[][] lastRender = new AsciiCharacterData[][]{};
 
     public Screen() {
         this.setSize(DIMENSION);
@@ -27,6 +30,11 @@ public class Screen extends JPanel {
         asciiPanel.setBackground(Color.BLACK);
         asciiPanel.setForeground(Color.WHITE);
         System.out.println(view.toString());
+        filter = new TileTransformer() {
+            @Override
+            public void transformTile(int x, int y, AsciiCharacterData data) {
+            }
+        };
     }
 
     public void addAnimation(TileTransformer t) {
@@ -41,6 +49,16 @@ public class Screen extends JPanel {
 
     public void transform(int x, int y, AsciiCharacterData data) {
         view.transform(x, y, data);
+    }
+
+    public void filter(TileTransformer t) {
+        if (t != null) {
+            filter = t;
+        }
+    }
+
+    public void transform(TileTransformer t) {
+        view.transform(t);
     }
 
     public void addDraw(Render r) {

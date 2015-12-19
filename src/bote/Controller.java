@@ -3,6 +3,7 @@ package bote;
 import asciiPanel.AsciiCharacterData;
 import asciiPanel.Render;
 import asciiPanel.TileTransformer;
+import bote.game.DayClock;
 import bote.game.Player;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,11 +18,13 @@ public class Controller {
     private static TextArea console;
     private Player player;
     private Page page;
+    private DayClock clock;
 
     public Controller() {
         screen = Screen.getInstance();
         console = TextArea.getInstance();
         setPage(new IntroPage());
+        clock = new DayClock();
     }
 
     public final void setPage(Page p) {
@@ -49,6 +52,14 @@ public class Controller {
 
     public void transform(int x, int y, AsciiCharacterData data) {
         screen.transform(x, y, data);
+    }
+
+    public void transform(TileTransformer t) {
+        screen.transform(t);
+    }
+    
+    public void addFilter(TileTransformer t){
+        screen.filter(t);
     }
 
     public void console(String out) {
@@ -110,8 +121,28 @@ public class Controller {
     }
 
     public void takeInput(int keyCode) {
-//        console.write(keyCode + " pressed");
+        console.write(keyCode + " pressed");
         execute(page.pageAction(keyCode));
+        if (clock.tick().isSunset()) {
+            console.write("The sun sets over the horizon");
+            this.addFilter(new TileTransformer() {
+                @Override
+                public void transformTile(int x, int y, AsciiCharacterData data) {
+                    data.foregroundColor = data.foregroundColor.darker();
+                    data.backgroundColor = data.backgroundColor.darker();
+                }
+            });
+        }
+        if (clock.tick().isSunrise()) {
+            console.write("The sun rises");
+            this.addFilter(new TileTransformer() {
+                @Override
+                public void transformTile(int x, int y, AsciiCharacterData data) {
+                    data.foregroundColor = data.foregroundColor.brighter();
+                    data.backgroundColor = data.backgroundColor.brighter();
+                }
+            });
+        }
 //        switch (keyCode) {
 //            case 65://a
 //            case 37://left
@@ -140,11 +171,18 @@ public class Controller {
     public Player loadGame() {
         Player load = null;
         try {
-            FileInputStream fIn = new FileInputStream("sv.data");
+            FileInputStream fIn = new FileInputStream("pl.data");
             ObjectInputStream objIn = new ObjectInputStream(fIn);
             load = (Player) objIn.readObject();
         } catch (Exception e) {
-            System.out.println("I didn't load it");
+            System.out.println("I didn't load the player");
+        }
+        try {
+            FileInputStream fIn = new FileInputStream("tm.data");
+            ObjectInputStream objIn = new ObjectInputStream(fIn);
+            clock = (DayClock) objIn.readObject();
+        } catch (Exception e) {
+            System.out.println("I didn't load the clock");
         }
         System.out.println(load.toString());
         return load;
@@ -152,19 +190,35 @@ public class Controller {
 
     public void save() {
         try {
-            File f = new File("sv.data");
+            File f = new File("pl.data");
             f.delete();
         } catch (Exception io) {
-            System.out.println("couldn't delete the file");
+            System.out.println("couldn't delete the pl.data file");
         }
         try {
-            FileOutputStream fOut = new FileOutputStream("sv.data");
+            FileOutputStream fOut = new FileOutputStream("pl.data");
             ObjectOutputStream objOut = new ObjectOutputStream(fOut);
             objOut.writeObject(player);
             fOut.close();
             objOut.close();
         } catch (Exception e) {
             System.out.println("I didn't save it");
+        }
+        
+        try {
+            File f = new File("tm.data");
+            f.delete();
+        } catch (Exception io) {
+            System.out.println("couldn't delete the tm.data file");
+        }
+        try {
+            FileOutputStream fOut = new FileOutputStream("tm.data");
+            ObjectOutputStream objOut = new ObjectOutputStream(fOut);
+            objOut.writeObject(clock);
+            fOut.close();
+            objOut.close();
+        } catch (Exception e) {
+            System.out.println("I didn't save the clock");
         }
         System.out.println("saving done");
     }

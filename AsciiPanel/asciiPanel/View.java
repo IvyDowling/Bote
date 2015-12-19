@@ -219,6 +219,16 @@ public class View {
             }
         }
     }
+    
+    public void transform(TileTransformer t){
+        if(t != null){
+            for (int y = 0; y < height; y++) {
+                    for (int x = 0; x < width; x++) {
+                        t.transformTile(x, y, view[x][y]);
+                    }
+                }
+        }
+    }
 
     public AsciiCharacterData[][] getDraw() {
         return view;

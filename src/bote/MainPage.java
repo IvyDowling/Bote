@@ -121,20 +121,20 @@ public class MainPage extends Page {
                         c.save();
                     }
                 };
-//            case 27://esc
-//                return new Command() {
-//                    @Override
-//                    public void exe(Controller c) {
-//                        c.addAnimation(new TileTransformer() {
-//                            @Override
-//                            public void transformTile(int x, int y, AsciiCharacterData data) {
-//                                data.foregroundColor = data.foregroundColor.darker();
-//                                data.backgroundColor = data.backgroundColor.darker();
-//                            }
-//
-//                        });
-//                    }
-//                };
+            case 77: //m
+                return new Command() {
+                    @Override
+                    public void exe(Controller c) {
+                        c.transform(new TileTransformer() {
+                            @Override
+                            public void transformTile(int x, int y, AsciiCharacterData data) {
+                                data.foregroundColor = data.foregroundColor.darker();
+                                data.backgroundColor = data.backgroundColor.darker();
+                            }
+                        }
+                        );
+                    }
+                };
         }
         return new Command() {
             @Override
