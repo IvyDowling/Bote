@@ -135,6 +135,20 @@ public class MainPage extends Page {
                         );
                     }
                 };
+            case 82: //r
+                return new Command() {
+                    @Override
+                    public void exe(Controller c) {
+                        c.console("You recall the fish in this area...");
+                    }
+                };
+            case 79: //o
+                return new Command() {
+                    @Override
+                    public void exe(Controller c) {
+                        c.console("You observe your surroundings");
+                    }
+                };
         }
         return new Command() {
             @Override

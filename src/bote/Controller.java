@@ -123,26 +123,26 @@ public class Controller {
     public void takeInput(int keyCode) {
         console.write(keyCode + " pressed");
         execute(page.pageAction(keyCode));
-        if (clock.tick().isSunset()) {
-            console.write("The sun sets over the horizon");
-            this.addFilter(new TileTransformer() {
-                @Override
-                public void transformTile(int x, int y, AsciiCharacterData data) {
-                    data.foregroundColor = data.foregroundColor.darker();
-                    data.backgroundColor = data.backgroundColor.darker();
-                }
-            });
-        }
-        if (clock.tick().isSunrise()) {
-            console.write("The sun rises");
-            this.addFilter(new TileTransformer() {
-                @Override
-                public void transformTile(int x, int y, AsciiCharacterData data) {
-                    data.foregroundColor = data.foregroundColor.brighter();
-                    data.backgroundColor = data.backgroundColor.brighter();
-                }
-            });
-        }
+//        if (clock.tick().isSunset()) {
+//            console.write("The sun sets over the horizon");
+//            this.addFilter(new TileTransformer() {
+//                @Override
+//                public void transformTile(int x, int y, AsciiCharacterData data) {
+//                    data.foregroundColor = data.foregroundColor.darker();
+//                    data.backgroundColor = data.backgroundColor.darker();
+//                }
+//            });
+//        }
+//        if (clock.tick().isSunrise()) {
+//            console.write("The sun rises");
+//            this.addFilter(new TileTransformer() {
+//                @Override
+//                public void transformTile(int x, int y, AsciiCharacterData data) {
+//                    data.foregroundColor = data.foregroundColor.brighter();
+//                    data.backgroundColor = data.backgroundColor.brighter();
+//                }
+//            });
+//        }
 //        switch (keyCode) {
 //            case 65://a
 //            case 37://left
