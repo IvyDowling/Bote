@@ -8,21 +8,28 @@ public abstract class MapPoint {
     //these are world coords
     protected int x, y;
     protected AsciiCharacterData data;
+    protected Biome biome;
 
-    public MapPoint(int x, int y, AsciiCharacterData d) {
+    public MapPoint(int x, int y, AsciiCharacterData d, Biome b) {
         this.x = x;
         this.y = y;
         data = d;
+        biome = b;
     }
-    
+
     public MapPoint(int x, int y) {
         this.x = x;
         this.y = y;
         data = new AsciiCharacterData('-', Color.WHITE, Color.BLACK);
+        biome = Biome.OPEN;
     }
 
     public AsciiCharacterData getData() {
         return data;
+    }
+
+    public Biome getBiome() {
+        return biome;
     }
 
     public void transform(int x, int y, AsciiCharacterData d) {

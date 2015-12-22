@@ -19,11 +19,28 @@ public class Island extends MapPoint {
         long seed = (((x + y) * (x + y + 1)) / 2) + y;
         dice = new Random();
         dice.setSeed(seed);
-        super.data = setData();
+        super.biome = makeBiome();//make the biome, then the data
+        super.data = makeData();
     }
-    
-    private AsciiCharacterData setData() {
+
+    private AsciiCharacterData makeData() {
         return new AsciiCharacterData(this.getChar(), getColor(), Color.ORANGE);
+    }
+
+    private Biome makeBiome() {
+        if (super.x % 1000 > 800) {
+            return Biome.WEEDY;
+        }
+        if (super.x % 1000 > 600) {
+            return Biome.CLOUDY;
+        }
+        if (super.x % 1000 > 400) {
+            return Biome.DEEP;
+        }
+        if (super.x % 1000 > 200) {
+            return Biome.SHALLOW;
+        }
+        return super.biome;
     }
 
     private Color getColor() {
