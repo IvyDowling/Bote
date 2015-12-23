@@ -3,7 +3,10 @@ package bote;
 import asciiPanel.AsciiCharacterData;
 import asciiPanel.Render;
 import asciiPanel.TileTransformer;
+import bote.game.Aquarium;
+import bote.game.Biome;
 import bote.game.DayClock;
+import bote.game.Fish;
 import bote.game.Player;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,12 +22,14 @@ public class Controller {
     private Player player;
     private Page page;
     private DayClock clock;
+    private Aquarium aquarium;
 
     public Controller() {
         screen = Screen.getInstance();
         console = TextArea.getInstance();
         setPage(new IntroPage());
         clock = new DayClock();
+        aquarium = new Aquarium();
     }
 
     public final void setPage(Page p) {
@@ -50,6 +55,15 @@ public class Controller {
         }
     }
 
+    public Fish goFishing(Biome b) {
+        
+        return aquarium.goFishing(b);
+    }
+
+    public Fish[] getFish(Biome b) {
+        return aquarium.getFishInBiome(b);
+    }
+
     public void transform(int x, int y, AsciiCharacterData data) {
         screen.transform(x, y, data);
     }
@@ -57,8 +71,8 @@ public class Controller {
     public void transform(TileTransformer t) {
         screen.transform(t);
     }
-    
-    public void addFilter(TileTransformer t){
+
+    public void addFilter(TileTransformer t) {
         screen.filter(t);
     }
 
@@ -121,42 +135,9 @@ public class Controller {
     }
 
     public void takeInput(int keyCode) {
-        console.write(keyCode + " pressed");
+//        console.write(keyCode + " pressed");
         execute(page.pageAction(keyCode));
-//        if (clock.tick().isSunset()) {
-//            console.write("The sun sets over the horizon");
-//            this.addFilter(new TileTransformer() {
-//                @Override
-//                public void transformTile(int x, int y, AsciiCharacterData data) {
-//                    data.foregroundColor = data.foregroundColor.darker();
-//                    data.backgroundColor = data.backgroundColor.darker();
-//                }
-//            });
-//        }
-//        if (clock.tick().isSunrise()) {
-//            console.write("The sun rises");
-//            this.addFilter(new TileTransformer() {
-//                @Override
-//                public void transformTile(int x, int y, AsciiCharacterData data) {
-//                    data.foregroundColor = data.foregroundColor.brighter();
-//                    data.backgroundColor = data.backgroundColor.brighter();
-//                }
-//            });
-//        }
-//        switch (keyCode) {
-//            case 65://a
-//            case 37://left
-//                break;
-//            case 87://w
-//            case 38://up
-//                break;
-//            case 68://d
-//            case 39://right
-//                break;
-//            case 83://s
-//            case 40://down
-//                break;
-//        }
+        clock.tick();
     }
 
     public Player getPlayer() {
@@ -168,12 +149,11 @@ public class Controller {
         this.save();
     }
 
-    public Player loadGame() {
-        Player load = null;
+    public void loadGame() {
         try {
             FileInputStream fIn = new FileInputStream("pl.data");
             ObjectInputStream objIn = new ObjectInputStream(fIn);
-            load = (Player) objIn.readObject();
+            player = (Player) objIn.readObject();
         } catch (Exception e) {
             System.out.println("I didn't load the player");
         }
@@ -184,11 +164,19 @@ public class Controller {
         } catch (Exception e) {
             System.out.println("I didn't load the clock");
         }
-        System.out.println(load.toString());
-        return load;
+        try {
+            FileInputStream fIn = new FileInputStream("aq.data");
+            ObjectInputStream objIn = new ObjectInputStream(fIn);
+            aquarium = (Aquarium) objIn.readObject();
+        } catch (Exception e) {
+            System.out.println("I didn't load the aquarium");
+        }
+        System.out.println(player.toString());
+        System.out.println(aquarium.toString());
     }
 
     public void save() {
+        //player
         try {
             File f = new File("pl.data");
             f.delete();
@@ -204,7 +192,7 @@ public class Controller {
         } catch (Exception e) {
             System.out.println("I didn't save it");
         }
-        
+        //clock
         try {
             File f = new File("tm.data");
             f.delete();
@@ -220,6 +208,23 @@ public class Controller {
         } catch (Exception e) {
             System.out.println("I didn't save the clock");
         }
+        //aquarium
+        try {
+            File f = new File("aq.data");
+            f.delete();
+        } catch (Exception io) {
+            System.out.println("couldn't delete the aq.data file");
+        }
+        try {
+            FileOutputStream fOut = new FileOutputStream("aq.data");
+            ObjectOutputStream objOut = new ObjectOutputStream(fOut);
+            objOut.writeObject(aquarium);
+            fOut.close();
+            objOut.close();
+        } catch (Exception e) {
+            System.out.println("I didn't save the aquarium");
+        }
+        System.out.println(aquarium.toString());
         System.out.println("saving done");
     }
 

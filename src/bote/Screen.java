@@ -96,7 +96,7 @@ public class Screen extends JPanel {
         }
         if (!transformList.isEmpty()) {
             TileTransformer[] tempTransformer = transformList.toArray(new TileTransformer[transformList.size()]);
-            transformList.clear();
+//            transformList.clear();
             for (TileTransformer t : tempTransformer) {
                 asciiPanel.withEachTile(t);
             }

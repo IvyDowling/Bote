@@ -31,7 +31,7 @@ public class IntroPage extends Page {
                     @Override
                     public void exe(Controller c) {
                         //load game data
-                        c.newPlayer(c.loadGame());
+                        c.loadGame();
                         c.setPage(new MainPage(c.getPlayer().getX(), c.getPlayer().getY(),
                                 c.getScreenWidth(), c.getScreenHeight()));
                     }

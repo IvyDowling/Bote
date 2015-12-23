@@ -36,7 +36,7 @@ public class MainPage extends Page {
                 public void transformTile(int x, int y, AsciiCharacterData data) {
                     if (x == 60 && y == 20) {
                         data.character = ImageLib.ALPHA;
-                        data.foregroundColor = Color.ORANGE;
+                        data.foregroundColor = new Color(200, 100, 0);
                     }
                 }
             }
@@ -102,14 +102,18 @@ public class MainPage extends Page {
 
                     }
                 };
-            case 70: //f - fish
+            case 70: //f - goFishing
                 return new Command() {
                     @Override
                     public void exe(Controller c) {
+//                      //fetch goFishing
+                        Fish caught = c.goFishing(world.getCurrentBiome());
+                        if (caught != null) {
+                            c.console("You pull up a " + caught.getName());
+                        } else {
+                            c.console("Nothing bites.");
+                        }
                         c.console("You cast your rod...");
-//                      //fetch fish
-                        //also save fish
-
                     }
                 };
             case 27: //esc
@@ -139,12 +143,12 @@ public class MainPage extends Page {
                     @Override
                     public void exe(Controller c) {
                         String s = "";
-                        Fish[] fishes = c.getPlayer().getFish(world.getCurrentBiome());
+                        Fish[] fishes = c.getFish(world.getCurrentBiome());
                         if (fishes.length == 0) {
                             s = "none that you remember.";
                         }
                         for (Fish f : fishes) {
-                            s += f.toString() + ", ";
+                            s += f.getName() + ", ";
                         }
                         c.console("You recall the fish in this area... there were " + s);
                     }

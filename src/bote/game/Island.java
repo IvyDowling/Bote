@@ -33,7 +33,7 @@ public class Island extends MapPoint {
     }
 
     private AsciiCharacterData makeData() {
-        return new AsciiCharacterData(this.getChar(), getColor(), Color.ORANGE);
+        return new AsciiCharacterData(this.getChar(), new Color(60, 20, 20), Color.ORANGE);
     }
 
     private Biome makeBiome() {
@@ -50,13 +50,6 @@ public class Island extends MapPoint {
             return Biome.SHALLOW;
         }
         return super.biome;
-    }
-
-    private Color getColor() {
-        int delta = 50;// dont wanna make this + PALETTE.getBlue > 255
-        return new Color(0,
-                PALETTE.getGreen() + (int) (dice.nextInt(delta) / 2),
-                PALETTE.getBlue() + (int) (dice.nextInt(delta) / 2));
     }
 
     private char getChar() {
