@@ -26,6 +26,16 @@ public class Player implements Serializable {
         return player;
     }
 
+    public Fish[] getFish(Biome b) {
+        List<Fish> temp = new ArrayList<>();
+        for (Fish f : fishDictionary) {
+            if (f.getBiome() == b) {
+                temp.add(f);
+            }
+        }
+        return temp.toArray(new Fish[temp.size()]);
+    }
+
     public void addNewFish(Fish f) {
         if (!fishDictionary.contains(f)) {
             fishDictionary.add(f);

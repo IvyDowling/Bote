@@ -3,6 +3,7 @@ package bote;
 import asciiPanel.AsciiCharacterData;
 import asciiPanel.Render;
 import asciiPanel.TileTransformer;
+import bote.game.Fish;
 import bote.game.WorldMap;
 import java.awt.Color;
 
@@ -106,11 +107,9 @@ public class MainPage extends Page {
                     @Override
                     public void exe(Controller c) {
                         c.console("You cast your rod...");
-//                        if (world.getDraw(c.getPlayer().getX(), c.getPlayer().getY()).getData().backgroundColor.getBlue() % 2 > 100) {
-//                            c.console("You catch a common tuna.");
-//                        } else {
-//                            c.console("Nothing bites.");
-//                        }
+//                      //fetch fish
+                        //also save fish
+
                     }
                 };
             case 27: //esc
@@ -139,14 +138,22 @@ public class MainPage extends Page {
                 return new Command() {
                     @Override
                     public void exe(Controller c) {
-                        c.console("You recall the fish in this area...");
+                        String s = "";
+                        Fish[] fishes = c.getPlayer().getFish(world.getCurrentBiome());
+                        if (fishes.length == 0) {
+                            s = "none that you remember.";
+                        }
+                        for (Fish f : fishes) {
+                            s += f.toString() + ", ";
+                        }
+                        c.console("You recall the fish in this area... there were " + s);
                     }
                 };
             case 79: //o
                 return new Command() {
                     @Override
                     public void exe(Controller c) {
-                        c.console("You observe your surroundings");
+                        c.console("You observe your surroundings. You find yourself in " + world.getCurrentBiome().toString() + " waters.");
                     }
                 };
         }

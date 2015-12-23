@@ -1,12 +1,20 @@
 package bote.game;
 
 public class Fish {
-    
+
     private String name;
-    private Biome loc;
-    
-    public Fish(String n, Biome b){
+    private Biome biome;
+
+    public Fish(String n, Biome b) {
         name = n;
-        loc = b;
+        biome = b;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Biome getBiome() {
+        return biome;
     }
 }

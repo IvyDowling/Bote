@@ -1,7 +1,6 @@
 package bote.game;
 
 import asciiPanel.AsciiCharacterData;
-import asciiPanel.Render;
 import bote.ImageLib;
 import java.awt.Color;
 import java.util.Random;
@@ -10,6 +9,7 @@ public class Island extends MapPoint {
 
     private Random dice;
     private Color PALETTE;
+    private int area; // number of tiles
 
     public Island(int x, int y) {
         super(x, y);
@@ -19,8 +19,17 @@ public class Island extends MapPoint {
         long seed = (((x + y) * (x + y + 1)) / 2) + y;
         dice = new Random();
         dice.setSeed(seed);
+        area = dice.nextInt(500);
         super.biome = makeBiome();//make the biome, then the data
         super.data = makeData();
+    }
+
+    public int getSize() {
+        return area;
+    }
+
+    public int getRadius() {
+        return (int) Math.sqrt(area / Math.PI);
     }
 
     private AsciiCharacterData makeData() {

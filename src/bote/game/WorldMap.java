@@ -19,6 +19,10 @@ public class WorldMap {
         this.setSeed(x, y);
     }
 
+    public Biome getCurrentBiome() {
+        return new Biotope(playerX, playerY).biome;
+    }
+
     private void setSeed(int x, int y) {
         //Cantor pairing for distinct rand
         //math.stackexchange.com/questions/23503/create-unique-number-from-2-numbers
