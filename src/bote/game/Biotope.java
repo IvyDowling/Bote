@@ -37,7 +37,7 @@ public class Biotope extends MapPoint {
     }
 
     private AsciiCharacterData makeData(int x, int y) {
-        return new AsciiCharacterData('~', getColor(), getColor());
+        return new AsciiCharacterData('~', getColor(50), getColor(100));
     }
 
     private Biome makeBiome() {
@@ -58,6 +58,21 @@ public class Biotope extends MapPoint {
 
     private Color getColor() {
         int delta = 50;// dont wanna make this + PALETTE.getBlue > 255
+        int green = dice.nextInt(delta) / 2;
+        int blue = dice.nextInt(delta) / 2;
+        if ((palette.getGreen() + green) > 255) {
+            green = 0;
+        }
+        if ((palette.getBlue() + blue) > 255) {
+            blue = 0;
+        }
+        return new Color(0,
+                palette.getGreen() + green,
+                palette.getBlue() + blue);
+    }
+
+    private Color getColor(int d) {
+        int delta = d;// dont wanna make this + PALETTE.getBlue > 255
         int green = dice.nextInt(delta) / 2;
         int blue = dice.nextInt(delta) / 2;
         if ((palette.getGreen() + green) > 255) {

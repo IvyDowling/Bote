@@ -56,11 +56,12 @@ public class MainPage extends Page {
                 return new Command() {
                     @Override
                     public void exe(Controller c) {
-                        c.getPlayer().decX();
-                        world.decPlayerX();
-                        c.transform(-1, 0, null);
-                        c.addCol(0, world.getLeftCol());
-//                        c.addDraw(world.getFullDraw());
+                        if (world.getDraw(c.getPlayer().getX() - 1, c.getPlayer().getY()).character == '~') {
+                            c.getPlayer().decX();
+                            world.decPlayerX();
+                            c.transform(-1, 0, null);
+                            c.addCol(0, world.getLeftCol());
+                        }
                     }
                 };
             case 87://w
@@ -68,12 +69,12 @@ public class MainPage extends Page {
                 return new Command() {
                     @Override
                     public void exe(Controller c) {
-                        c.getPlayer().decY();
-                        world.decPlayerY();
-                        c.transform(0, 1, null);
-                        c.addRow(0, world.getTopRow());
-//                        c.addDraw(world.getFullDraw());
-
+                        if (world.getDraw(c.getPlayer().getX(), c.getPlayer().getY() - 1).character == '~') {
+                            c.getPlayer().decY();
+                            world.decPlayerY();
+                            c.transform(0, 1, null);
+                            c.addRow(0, world.getTopRow());
+                        }
                     }
                 };
             case 68://d
@@ -81,12 +82,12 @@ public class MainPage extends Page {
                 return new Command() {
                     @Override
                     public void exe(Controller c) {
-                        c.getPlayer().incX();
-                        world.incPlayerX();
-                        c.transform(1, 0, null);
-                        c.addCol(c.getScreenWidth() - 1, world.getRightCol());
-//                        c.addDraw(world.getFullDraw());
-
+                        if (world.getDraw(c.getPlayer().getX() + 1, c.getPlayer().getY()).character == '~') {
+                            c.getPlayer().incX();
+                            world.incPlayerX();
+                            c.transform(1, 0, null);
+                            c.addCol(c.getScreenWidth() - 1, world.getRightCol());
+                        }
                     }
                 };
             case 83://s
@@ -94,12 +95,12 @@ public class MainPage extends Page {
                 return new Command() {
                     @Override
                     public void exe(Controller c) {
-                        c.getPlayer().incY();
-                        world.incPlayerY();
-                        c.transform(0, -1, null);
-                        c.addRow(c.getScreenHeight() - 1, world.getBottomRow());
-//                        c.addDraw(world.getFullDraw());
-
+                        if (world.getDraw(c.getPlayer().getX(), c.getPlayer().getY() + 1).character == '~') {
+                            c.getPlayer().incY();
+                            world.incPlayerY();
+                            c.transform(0, -1, null);
+                            c.addRow(c.getScreenHeight() - 1, world.getBottomRow());
+                        }
                     }
                 };
             case 70: //f - goFishing

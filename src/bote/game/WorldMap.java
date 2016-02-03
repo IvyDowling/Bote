@@ -35,7 +35,7 @@ public class WorldMap {
      *
      * @param worldX: this is the world value, not the screen x
      * @param worldY: this is the world value, not the screen y
-     * @return
+     * @return given the world values this returns an AsciiCharacterData
      */
     public AsciiCharacterData getDraw(int worldX, int worldY) {
         Random r = new Random();

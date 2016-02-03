@@ -3,6 +3,8 @@ package bote;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -36,17 +38,52 @@ public class Bote extends Canvas implements Runnable {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(screen, BorderLayout.WEST);
         frame.add(console, null);
+        this.setUpListener();
         frame.pack();
+
         frame.setPreferredSize(DIMENSION);
         frame.setResizable(true);
-        //A nice visible top left corner point (5,5)
         frame.setLocation(0, 0);
         frame.setVisible(true);
         frame.setSize(DIMENSION);
     }
 
+    private void setUpListener() {
+        frame.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent we) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent we) {
+                control.save();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent we) {
+                control.save();
+            }
+
+            @Override
+            public void windowIconified(WindowEvent we) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent we) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent we) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent we) {
+            }
+        });
+    }
+
     public void init() {
-        
+
     }
 
     public synchronized void start() {
@@ -113,10 +150,10 @@ public class Bote extends Canvas implements Runnable {
 
     }
 
-    public void render(){
+    public void render() {
         //every 60 ticks
     }
-    
+
     public void tick() {
         //Operated Every tick
 

@@ -56,7 +56,6 @@ public class Controller {
     }
 
     public Fish goFishing(Biome b) {
-        
         return aquarium.goFishing(b);
     }
 
@@ -138,6 +137,9 @@ public class Controller {
 //        console.write(keyCode + " pressed");
         execute(page.pageAction(keyCode));
         clock.tick();
+        if (clock.isSunrise() || clock.isSunset()) {
+            this.save();
+        }
     }
 
     public Player getPlayer() {
@@ -176,6 +178,7 @@ public class Controller {
     }
 
     public void save() {
+        System.out.println("starting save...");
         //player
         try {
             File f = new File("pl.data");
@@ -221,10 +224,10 @@ public class Controller {
             objOut.writeObject(aquarium);
             fOut.close();
             objOut.close();
+            System.out.println(aquarium.toString());
         } catch (Exception e) {
             System.out.println("I didn't save the aquarium");
         }
-        System.out.println(aquarium.toString());
         System.out.println("saving done");
     }
 
